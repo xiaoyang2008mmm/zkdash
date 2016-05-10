@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% block body %}
 
+   <link href="/static/css/zTreeStyle.css" rel="stylesheet">
+   <script src="/static/js/jquery.ztree.core.min.js"></script>
+
+
 
 <div class="panel panel-primary">
   <div class="panel-heading">
@@ -31,6 +35,93 @@
       </div>
     </div>
   </div>
+</div>
+
+
+
+
+
+<div class="container-fluid">
+  <div class="panel panel-default col-sm-5">
+    <div class="panel-heading">
+      <h3 class="panel-title">节点详情</h3></div>
+    <div class="panel-body">
+      <div class="content_wrap">
+        <ul id="treeDemo" class="ztree"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default col-sm-7">
+    <div class="panel-heading">
+      <h3 class="panel-title">节点展示</h3></div>
+    <div class="panel-body">
+      <div class="table-responsive">
+        <table class="table table-bordered  table-hover .table-condensed  ">
+          <tbody>
+            <tr>
+              <td>
+                <form class="form-horizontal" role="form">
+                  <fieldset disabled>
+                    <div class="form-group">
+                      <label for="disabledTextInput" class="col-sm-2 control-label">集群名称</label>
+                      <div class="col-sm-10">
+                        <input type="text" id="disabledTextInput" class="form-control  input-sm" placeholder="禁止输入"></div>
+                    </div>
+                    <div class="form-group">
+                      <label for="disabledTextInput" class="col-sm-2 control-label">节点路径</label>
+                      <div class="col-sm-10">
+                        <input type="text" id="disabledTextInput" class="form-control  input-sm" placeholder="禁止输入"></div>
+                    </div>
+                    <div class="form-group">
+                      <label for="disabledTextInput" class="col-sm-2 control-label">节点名称</label>
+                      <div class="col-sm-10">
+                        <input type="text" id="disabledTextInput" class="form-control   input-sm" placeholder="禁止输入"></div>
+                    </div>
+                </form>
+              </td>
+            </tr>
+            <tr>
+              <td>CRUD操作
+                <div class="btn-group  ">
+                  <button type="button" class="btn btn-success">查看</button>
+                  <button type="button" class="btn btn-warning">修改</button>
+                  <button type="button" class="btn btn-danger">新增</button>
+                  <button type="button" class="btn btn-info">删除</button></div>
+              </td>
+            </tr>
+            <tr>
+              <td>批量操作
+                <div class="btn-group  ">
+                  <button type="button" class="btn btn-info">批量增改</button></div>
+              </td>
+            </tr>
+            <tr>
+              <td>快照操作
+                <div class="btn-group  ">
+                  <button type="button" class="btn btn-info">批量增改</button>
+                  <button type="button" class="btn btn-info">生成快照</button>
+                  <button type="button" class="btn btn-info">批量生成快照</button></div>
+              </td>
+            </tr>
+            <tr>
+              <td>反馈操作
+                <div class="btn-group  ">
+                  <button type="button" class="btn btn-info">同步状况</button>
+                  <button type="button" class="btn btn-info">导出</button></div>
+              </td>
+            </tr>
+            <tr>
+              <td>地狱门
+                <div class="btn-group  ">
+                  <button type="button" class="btn btn-info">批量删除</button></div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
