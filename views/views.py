@@ -9,3 +9,9 @@ class Base_Handler(BaseHandler):
     def get(self):
 	self.render("base.html")
 
+
+
+class Config_Mangager(BaseHandler):
+    def get(self):
+	self.render("config_mangager.html")
+
