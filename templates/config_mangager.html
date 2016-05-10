@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block body %}
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">配置查询</h3></div>
+  <div class="panel-body">
+    <div class="container">
+      <div class="row">
+        <div class="form-group has-success">
+          <label class="col-sm-1 control-label text-right" for="inputSuccess">集群名称:</label>
+          <div class="col-sm-2">
+            <div class="form-group">
+              <select class="form-control input-sm">
+                <option value="">test</option>
+                <option value="">test</option>
+                <option value="">test</option></select>
+            </div>
+          </div>
+          <label class="col-sm-1 control-label text-right" for="inputSuccess">节点路劲:</label>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <input class="form-control" type="text" placeholder="默认输入"></div>
+          </div>
+          <div>
+            <button type="button" class="btn btn-primary">
+              <span class="glyphicon glyphicon-search"></span>查询</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+{%end%}
