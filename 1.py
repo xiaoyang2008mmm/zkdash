@@ -1,24 +1,26 @@
 import  zookeeper
 zk=zookeeper.init('10.46.162.118:2181') 
 
-data = [] 
 def get_node(node_key):
     if node_key == "/":
         for node in zookeeper.get_children(zk,node_key):
              key =  "/" + node 
              if (zookeeper.get(zk,key)[1])['numChildren'] > 0:
                   get_node(key)
-    	     print key
-	     data.append({'name': key})
-	     print data
     else:
+	data=[]
         for node in zookeeper.get_children(zk,node_key):
              key =  node_key + "/" + node 
              if (zookeeper.get(zk,key)[1])['numChildren'] > 0:
-                  get_node(key)
-    	     print key
+	          data.append(get_node(key))
+	     else:
+	          data.append({'name': node})
+		
+    node = {'name':node_key} 
+    node['children'] = data
+    return node
 
-get_node('/')
+print get_node('/live_business')
 
 
 zookeeper.close(zk)
