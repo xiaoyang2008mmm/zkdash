@@ -20,20 +20,15 @@ class Config_Mangager(BaseHandler):
 
 
 class Key_Json(BaseHandler):
+    """
     def get(self):
-	"""
-	obj = [{'name': "父节点1 - 展开",
-	    	    'children': [{'name': "父节点11 - 折叠"}]
-              }]
-	"""
-	#obj = [{'name': 'qconf','children': [{'name': "__qconf_register_hosts", 'children': [{'name': "BJ-Gitlab-162-19"}]  }]  }]
 	#obj = [{'name': '/qconf', 'children': [{'name': '/qconf/key1', 'children': [{'name': 'key2'}, {'name': 'key3'}]}, {'name': '/qconf/__qconf_register_hosts', 'children': [{'name': 'BJ-Gitlab-162-19'}]}]}]
 	data = self.get_node('/live_business')
 	print data
 	obj = [data]
 	data = json.dumps(obj)
 	self.write(data)
-
+    """
 
     def get_node(self,node_key):
 	zk=zookeeper.init('10.46.162.118:2181')
@@ -56,3 +51,17 @@ class Key_Json(BaseHandler):
 	zookeeper.close(zk)
     
         return node
+class Node_Path(Key_Json):
+    def post(self):
+	request_dict = self.request.arguments
+	node_key = (request_dict['node_path'])[0]
+	if  node_key.startswith('/'):
+	    try:
+                data = self.get_node(node_key)
+                obj = [data]
+                data = json.dumps(obj)
+                self.write(data)
+	    except:
+                self.write("node不存在")
+	else:
+            self.write("节点必须以/开头")
