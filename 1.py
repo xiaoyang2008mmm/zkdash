@@ -20,7 +20,7 @@ def get_node(node_key):
     node['children'] = data
     return node
 
-print get_node('/live_business')
+print get_node('/')
 
 
 zookeeper.close(zk)

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*- 
 import tornado.web , os , json
 import  zookeeper
+from lib.zk import get_base
 
 class BaseHandler(tornado.web.RequestHandler):
     @property
@@ -17,6 +18,9 @@ class Config_Mangager(BaseHandler):
     def get(self):
 	self.render("config_mangager.html")
 
+class Get_Base_Node(BaseHandler):
+    def get(self):
+	self.write(get_base())
 
 
 class Key_Json(BaseHandler):
