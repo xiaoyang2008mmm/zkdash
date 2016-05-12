@@ -79,8 +79,15 @@ $(document).ready(function() {
             alert("根节点不能修改");
         } else {
 
-            $('#node_name').attr("value", get_node_tree());
-            $('#myModal').modal('show');
+            $.post("/get_node_value/", {
+                choose_node: value_data,
+            },
+            function(data) {
+                $('#node_name').attr("value", get_node_tree());
+                $('#name_value').attr("value", data);
+                $('#myModal').modal('show');
+
+            });
 
         };
     });
