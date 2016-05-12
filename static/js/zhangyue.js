@@ -28,8 +28,8 @@ $(document).ready(function() {
 
         var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
         var nodes = treeObj.getSelectedNodes();
-
         treeNode = nodes[0];
+	alert(treeNode.name);
         if (nodes.length == 0) {
             alert("请先选择一个节点");
             return;
