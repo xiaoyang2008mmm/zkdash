@@ -24,15 +24,6 @@ class Get_Base_Node(BaseHandler):
 
 
 class Key_Json(BaseHandler):
-    """
-    def get(self):
-	#obj = [{'name': '/qconf', 'children': [{'name': '/qconf/key1', 'children': [{'name': 'key2'}, {'name': 'key3'}]}, {'name': '/qconf/__qconf_register_hosts', 'children': [{'name': 'BJ-Gitlab-162-19'}]}]}]
-	data = self.get_node('/live_business')
-	print data
-	obj = [data]
-	data = json.dumps(obj)
-	self.write(data)
-    """
 
     def get_node(self,node_key):
 	zk=zookeeper.init('10.46.162.118:2181')
