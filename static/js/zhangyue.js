@@ -84,12 +84,28 @@ $(document).ready(function() {
             },
             function(data) {
                 $('#node_name').attr("value", get_node_tree());
-                $('#name_value').attr("value", data);
+                $('#node_value').attr("name", data);
                 $('#myModal').modal('show');
 
             });
 
         };
+    });
+    ////////////////////////////////////////////
+    $("#commit_btn").click(function() {
+	var node_name = $('#node_name').attr("value");
+	var node_value= $('#node_value').val();
+
+            $.post("/mod_node_value/", {
+		node_name : node_name,
+		node_value: node_value,
+            },
+            function(data) {
+		alert(data);
+		$('#myModal').modal('hide');
+            });
+
+
     });
 
 });
