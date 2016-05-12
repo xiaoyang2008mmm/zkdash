@@ -84,7 +84,7 @@ $(document).ready(function() {
             },
             function(data) {
                 $('#node_name').attr("value", get_node_tree());
-                $('#node_value').attr("name", data);
+                $('#node_value').attr("value", data);
                 $('#myModal').modal('show');
 
             });
@@ -94,7 +94,7 @@ $(document).ready(function() {
     ////////////////////////////////////////////
     $("#commit_btn").click(function() {
 	var node_name = $('#node_name').attr("value");
-	var node_value= $('#node_value').val();
+	var node_value= $('#node_value').attr("value");
 
             $.post("/mod_node_value/", {
 		node_name : node_name,
