@@ -79,6 +79,7 @@ class Mod_Node_Value(BaseHandler):
 	node_value = (request_dict['node_value'])[0]
 	node_name = (request_dict['node_name'])[0]
 	zk=zookeeper.init('10.46.162.118:2181')
+	print node_value,  node_name
 	zookeeper.set(zk,node_name,node_value)
 	zookeeper.close(zk)
 	self.write("修改成功")

@@ -118,7 +118,7 @@ $(document).ready(function() {
     ////////////////////////////////////////////
     $("#commit_btn").click(function() {
         var node_name = $('#node_name').attr("value");
-        var node_value = $('#node_value').attr("value");
+        var node_value = $('#node_value').val();
 
         $.post("/mod_node_value/", {
             node_name: node_name,
