@@ -33,12 +33,11 @@ $(document).ready(function() {
             return;
         } else {
             post_func(get_node_tree());
+            for (var i = 0,
+            l = nodes.length; i < l; i++) {
+                treeObj.removeNode(nodes[i]);
+            }
         }
-        /*for (var i = 0,
-        l = nodes.length; i < l; i++) {
-            treeObj.removeNode(nodes[i]);
-        }
-        */
 
     });
     //////////////////////
