@@ -17,7 +17,7 @@ def get_node(node_key):
              if (zookeeper.get(zk,key)[1])['numChildren'] > 0:
                   data.append(get_node(key))
              else:
-                  data.append({'name': node})
+		  data.append({'name': node})
         
         
     node_dict = {'name':node_key}

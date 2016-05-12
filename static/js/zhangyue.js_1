@@ -28,7 +28,7 @@ $(document).ready(function() {
         var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
         var nodes = treeObj.getSelectedNodes();
         treeNode = nodes[0];
-        alert(treeNode.name);
+	alert(treeNode.name);
         if (nodes.length == 0) {
             alert("请先选择一个节点");
             return;
@@ -44,15 +44,19 @@ $(document).ready(function() {
         var nodes = treeObj.getSelectedNodes();
         treeNode = nodes[0];
         var value_data = treeNode.name;
+	
+if (value_data.indexOf("/") != 0)
+  {
 
-        if (value_data.indexOf("/") != 0) {
 
-            var sNodes = treeObj.getSelectedNodes();
-            if (sNodes.length > 0) {
-                var node = sNodes[0].getParentNode();
-                var value_data = node.name + '/' + value_data;
-            }
-        }
+var sNodes = treeObj.getSelectedNodes();
+if (sNodes.length > 0) {
+	var node = sNodes[0].getParentNode();
+	var value_data = node.name + '/' + value_data ;
+}
+}
+
+
 
         if (treeNode.name == "/") {
             alert("根节点下无数据");
@@ -61,10 +65,10 @@ $(document).ready(function() {
                 choose_node: value_data,
             },
             function(data) {
-                alert(data);
+		alert(data);
 
             });
-        };
+         };
     });
 
 });

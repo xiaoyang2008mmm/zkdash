@@ -65,3 +65,11 @@ class Node_Path(Key_Json):
                 self.write("node不存在")
 	else:
             self.write("节点必须以/开头")
+class Get_Node_Vsalue(BaseHandler):
+    def post(self):
+	request_dict = self.request.arguments
+	node_id = (request_dict['choose_node'])[0]
+	zk=zookeeper.init('10.46.162.118:2181')
+	_value = (zookeeper.get(zk,node_id))[0]
+	zookeeper.close(zk)
+	self.write(_value)
