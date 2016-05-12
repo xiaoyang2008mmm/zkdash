@@ -1,8 +1,10 @@
 import zookeeper,json
+from   get_zknode import get_node
 def get_base():
     zk=zookeeper.init('10.46.162.118:2181')
-    data = []
-    for node in zookeeper.get_children(zk,'/'):
-        data.append({'name': "/{0}".format(node),'isParent':True})
+    data = get_node('/')
     zookeeper.close(zk)
     return json.dumps(data)
+     
+
+
