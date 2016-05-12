@@ -40,11 +40,11 @@ $(document).ready(function() {
     });
     ////////////////////////
     $("#value_info").click(function() {
-	var value_data=get_node_tree();
+        var value_data = get_node_tree();
         if (value_data == "/") {
             alert("根节点下无数据");
         } else {
-            $.post("/get_node_vsalue/", {
+            $.post("/get_node_value/", {
                 choose_node: value_data,
             },
             function(data) {
@@ -54,8 +54,8 @@ $(document).ready(function() {
         };
     });
 
-/////////////////////////////////////////
-function get_node_tree(){
+    /////////////////////////////////////////
+    function get_node_tree() {
         var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
         var nodes = treeObj.getSelectedNodes();
         treeNode = nodes[0];
@@ -69,11 +69,20 @@ function get_node_tree(){
                 var value_data = node.name + '/' + value_data;
             }
         }
-	return value_data
-}
+        return value_data
+    }
+    ////////////////////////////////////////////
+    $("#value_change").click(function() {
 
+        var value_data = get_node_tree();
+        if (value_data == "/") {
+            alert("根节点不能修改");
+        } else {
 
+            $('#node_name').attr("value", get_node_tree());
+            $('#myModal').modal('show');
 
-
+        };
+    });
 
 });
