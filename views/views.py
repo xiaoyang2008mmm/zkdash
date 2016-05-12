@@ -76,10 +76,18 @@ class Get_Node_Value(BaseHandler):
 class Mod_Node_Value(BaseHandler):
     def post(self):
 	request_dict = self.request.arguments
-	print request_dict
 	node_value = (request_dict['node_value'])[0]
 	node_name = (request_dict['node_name'])[0]
 	zk=zookeeper.init('10.46.162.118:2181')
 	zookeeper.set(zk,node_name,node_value)
 	zookeeper.close(zk)
 	self.write("修改成功")
+class Post_Delete(BaseHandler):
+    def post(self):
+	request_dict = self.request.arguments
+	node_key = (request_dict['node_key'])[0]
+	print node_key
+	zk=zookeeper.init('10.46.162.118:2181')
+	zookeeper.delete(zk,node_key)
+	zookeeper.close(zk)
+	self.write("删除成功")

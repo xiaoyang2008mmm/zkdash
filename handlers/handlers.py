@@ -9,6 +9,7 @@ HANDLERS =[
 	   (r"/get_base_node/",		Get_Base_Node),
 	   (r"/get_node_value/",	Get_Node_Value),
 	   (r"/mod_node_value/",	Mod_Node_Value),
+	   (r"/post_delete/",		Post_Delete),
 	   (r"/node_path/",		Node_Path),
 	]
 #HANDLERS +=[(r"/chart/", ChartHandler)]
