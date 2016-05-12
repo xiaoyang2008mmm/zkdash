@@ -40,6 +40,22 @@ $(document).ready(function() {
     });
     ////////////////////////
     $("#value_info").click(function() {
+	var value_data=get_node_tree();
+        if (value_data == "/") {
+            alert("根节点下无数据");
+        } else {
+            $.post("/get_node_vsalue/", {
+                choose_node: value_data,
+            },
+            function(data) {
+                alert(data);
+
+            });
+        };
+    });
+
+/////////////////////////////////////////
+function get_node_tree(){
         var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
         var nodes = treeObj.getSelectedNodes();
         treeNode = nodes[0];
@@ -53,18 +69,11 @@ $(document).ready(function() {
                 var value_data = node.name + '/' + value_data;
             }
         }
+	return value_data
+}
 
-        if (treeNode.name == "/") {
-            alert("根节点下无数据");
-        } else {
-            $.post("/get_node_vsalue/", {
-                choose_node: value_data,
-            },
-            function(data) {
-                alert(data);
 
-            });
-        };
-    });
+
+
 
 });
