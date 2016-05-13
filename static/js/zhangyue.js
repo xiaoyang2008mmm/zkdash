@@ -32,10 +32,11 @@ $(document).ready(function() {
             alert("请先选择一个节点");
             return;
         } else {
-            post_func(get_node_tree());
+            if (post_func(get_node_tree()) != "false"){;
             for (var i = 0,
             l = nodes.length; i < l; i++) {
                 treeObj.removeNode(nodes[i]);
+            }
             }
         }
 
