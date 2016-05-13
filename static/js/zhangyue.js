@@ -202,5 +202,9 @@ $(document).ready(function() {
         }
 
     });
+    ////////////////////////////////////////////
+    $("#batch_xiugai").click(function() {
+	$('#myModal_batch').modal('show');
+    });
 
 });

@@ -90,15 +90,15 @@
               </td>
             </tr>
             <tr>
-              <td><label for="disabledTextInput" class="col-sm-2 control-label">批量操作</label>
+              <td><label  class="col-sm-2 control-label">批量操作</label>
                 <div class="btn-group  ">
-                  <button type="button" class="btn btn-danger">批量增改</button></div>
+                  <button type="button" class="btn btn-danger" id="batch_xiugai">批量增改</button></div>
               </td>
             </tr>
             <tr>
               <td><label for="disabledTextInput" class="col-sm-2 control-label">快照操作</label>
                 <div class="btn-group  ">
-                  <button type="button" class="btn btn-danger">批量增改</button>
+                  <button type="button" class="btn btn-danger">查看快照</button>
                   <button type="button" class="btn btn-info">生成快照</button>
                   <button type="button" class="btn btn-danger">批量生成快照</button></div>
               </td>
@@ -129,4 +129,5 @@
 
 {% include change.html %}
 {% include add_node.html %}
+{% include batch_add.html %}
 {%end%}
