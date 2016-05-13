@@ -130,5 +130,12 @@ $(document).ready(function() {
         });
 
     });
+    ////////////////////////////////////////////
+    $("#value_add").click(function() {
+	$('#parent_node_name').attr("value", get_node_tree())
+	$('#myModal_add').modal('show');
+	$('#new_node_name').val("");
+	$('#new_node_value').val("");
+    });
 
 });

@@ -83,9 +83,9 @@
             <tr>
               <td><label for="disabledTextInput" class="col-sm-2 control-label">CRUD操作</label> 
                 <div class="btn-group  ">
-                  <button type="button" class="btn btn-success" id="value_info">查看</button>
+                  <button type="button" class="btn btn-success" id="value_info" >查看</button>
                   <button type="button" class="btn btn-warning" id="value_change">修改</button>
-                  <button type="button" class="btn btn-danger">新增</button>
+                  <button type="button" class="btn btn-danger"  id="value_add">新增</button>
                   <button type="button" class="btn btn-info" id="delete_btn">删除</button></div>
               </td>
             </tr>
@@ -128,4 +128,5 @@
 
 
 {% include change.html %}
+{% include add_node.html %}
 {%end%}
