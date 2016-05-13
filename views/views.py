@@ -85,7 +85,7 @@ class Mod_Node_Value(BaseHandler):
 class Post_Delete(BaseHandler):
     def post(self):
 	request_dict = self.request.arguments
-	node_key = (requestyy_dict['node_key'])[0]
+	node_key = (request_dict['node_key'])[0]
 	zk=zookeeper.init('10.46.162.118:2181')
 	zookeeper.delete(zk,node_key)
 	zookeeper.close(zk)

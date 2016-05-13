@@ -1,4 +1,39 @@
-var setting = {};
+
+var setting = {
+    callback: {
+        onClick: onClick
+    }
+};
+
+function onClick(event, treeId, treeNode, clickFlag) {
+    $('#zk_tree').attr("value", get_parent_tree());
+    $('#zk_name').attr("value", treeNode.name);
+}
+
+function get_parent_tree() {
+    var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+    var nodes = treeObj.getSelectedNodes();
+    treeNode = nodes[0];
+    var value_data = treeNode.name;
+
+    if (value_data.indexOf("/") != 0) {
+
+        var sNodes = treeObj.getSelectedNodes();
+        if (sNodes.length > 0) {
+            var node = sNodes[0].getParentNode();
+            console.log(node.name);
+            console.log(value_data);
+            if (node.name == "/") {
+                var value_data = '/' + value_data;
+            } else {
+                var value_data = node.name + '/' + value_data;
+            }
+        }
+    }
+    return value_data
+}
+
+
 $(document).ready(function() {
 
     $.get("/get_base_node/",
@@ -132,7 +167,8 @@ $(document).ready(function() {
     });
     ////////////////////////////////////////////
     $("#value_add").click(function() {
-        $('#parent_node_name').attr("value", get_node_tree()) $('#myModal_add').modal('show');
+        $('#parent_node_name').attr("value", get_node_tree());
+        $('#myModal_add').modal('show');
         $('#new_node_name').val("");
         $('#new_node_value').val("");
         var new_node_name = $('#new_node_name').val();
