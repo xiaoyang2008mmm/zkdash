@@ -67,7 +67,8 @@ $(document).ready(function() {
             alert("请先选择一个节点");
             return;
         } else {
-            if (post_func(get_node_tree()) != "false") {;
+		var result = post_func(get_node_tree());
+            if ( String(result) != "false") {
                 for (var i = 0,
                 l = nodes.length; i < l; i++) {
                     treeObj.removeNode(nodes[i]);
@@ -205,6 +206,7 @@ $(document).ready(function() {
     ////////////////////////////////////////////
     $("#batch_xiugai").click(function() {
 	$('#myModal_batch').modal('show');
+        $('#add_node_name').attr("value", get_node_tree());
     });
 
 });
