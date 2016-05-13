@@ -32,11 +32,11 @@ $(document).ready(function() {
             alert("请先选择一个节点");
             return;
         } else {
-            if (post_func(get_node_tree()) != "false"){;
-            for (var i = 0,
-            l = nodes.length; i < l; i++) {
-                treeObj.removeNode(nodes[i]);
-            }
+            if (post_func(get_node_tree()) != "false") {;
+                for (var i = 0,
+                l = nodes.length; i < l; i++) {
+                    treeObj.removeNode(nodes[i]);
+                }
             }
         }
 
@@ -132,10 +132,39 @@ $(document).ready(function() {
     });
     ////////////////////////////////////////////
     $("#value_add").click(function() {
-	$('#parent_node_name').attr("value", get_node_tree())
-	$('#myModal_add').modal('show');
-	$('#new_node_name').val("");
-	$('#new_node_value').val("");
+        $('#parent_node_name').attr("value", get_node_tree()) $('#myModal_add').modal('show');
+        $('#new_node_name').val("");
+        $('#new_node_value').val("");
+        var new_node_name = $('#new_node_name').val();
+        var new_node_value = $('#new_node_value').val();
+    });
+    ////////////////////////////////////////////
+    $("#value_post").click(function() {
+        var node_name = $('#parent_node_name').attr("value");
+        var new_node_name = $('#new_node_name').val();
+        var new_node_value = $('#new_node_value').val();
+        var New_post_node = node_name + "/" + new_node_name;
+        alert(New_post_node + new_node_value);
+        if (new_node_name == "") {
+            alert("新节点名必须增加");
+        } else {
+            $.post("/add_node/", {
+                New_post_node: New_post_node,
+                new_node_value: new_node_value,
+            },
+            function(data) {
+                alert(data);
+                $('#myModal_add').modal('hide');
+                var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+                var nodes = treeObj.getSelectedNodes();
+                var newNode = {
+                    name: new_node_name
+                };
+                newNode = treeObj.addNodes(nodes[0], newNode);
+
+            });
+        }
+
     });
 
 });

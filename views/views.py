@@ -79,16 +79,28 @@ class Mod_Node_Value(BaseHandler):
 	node_value = (request_dict['node_value'])[0]
 	node_name = (request_dict['node_name'])[0]
 	zk=zookeeper.init('10.46.162.118:2181')
-	print node_value,  node_name
 	zookeeper.set(zk,node_name,node_value)
 	zookeeper.close(zk)
 	self.write("修改成功")
 class Post_Delete(BaseHandler):
     def post(self):
 	request_dict = self.request.arguments
-	node_key = (request_dict['node_key'])[0]
-	print node_key
+	node_key = (requestyy_dict['node_key'])[0]
 	zk=zookeeper.init('10.46.162.118:2181')
 	zookeeper.delete(zk,node_key)
 	zookeeper.close(zk)
 	self.write("删除成功")
+class Add_Node(BaseHandler):
+    def post(self):
+	request_dict = self.request.arguments
+	print request_dict
+	zk=zookeeper.init('10.46.162.118:2181')
+	new_node = (request_dict['New_post_node'])[0]
+	new_value = (request_dict['new_node_value'])[0]
+	if zookeeper.exists(zk,new_node):
+	    zookeeper.close(zk)
+	    self.write("此节点存在")
+	else:
+	    zookeeper.create(zk,new_node,new_value,[{"perms":0x1f,"scheme":"world","id":"anyone"}],0)	
+	    zookeeper.close(zk)
+	    self.write("增加成功")

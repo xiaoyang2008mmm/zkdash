@@ -11,5 +11,6 @@ HANDLERS =[
 	   (r"/mod_node_value/",	Mod_Node_Value),
 	   (r"/post_delete/",		Post_Delete),
 	   (r"/node_path/",		Node_Path),
+	   (r"/add_node/",		Add_Node),
 	]
 #HANDLERS +=[(r"/chart/", ChartHandler)]
