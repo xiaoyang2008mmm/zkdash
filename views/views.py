@@ -87,9 +87,14 @@ class Post_Delete(BaseHandler):
 	request_dict = self.request.arguments
 	node_key = (request_dict['node_key'])[0]
 	zk=zookeeper.init('10.46.162.118:2181')
-	zookeeper.delete(zk,node_key)
-	zookeeper.close(zk)
-	self.write("删除成功")
+	try:
+	   zookeeper.delete(zk,node_key)
+	   msg = '删除成功'
+	except:
+	   msg = '无法删除节点'
+	finally:
+	   zookeeper.close(zk)
+	self.write(msg)
 class Add_Node(BaseHandler):
     def post(self):
 	request_dict = self.request.arguments
@@ -104,3 +109,11 @@ class Add_Node(BaseHandler):
 	    zookeeper.create(zk,new_node,new_value,[{"perms":0x1f,"scheme":"world","id":"anyone"}],0)	
 	    zookeeper.close(zk)
 	    self.write("增加成功")
+class Hatch_Delete(BaseHandler):
+    def post(self):
+	request_dict = self.request.arguments
+	node_key = (request_dict['node_key'])[0]
+	zk=zookeeper.init('10.46.162.118:2181')
+	#zookeeper.delete(zk,node_key)
+	zookeeper.close(zk)
+	self.write("删除成功")

@@ -12,5 +12,6 @@ HANDLERS =[
 	   (r"/post_delete/",		Post_Delete),
 	   (r"/node_path/",		Node_Path),
 	   (r"/add_node/",		Add_Node),
+	   (r"/batch_delete/",		Hatch_Delete),
 	]
 #HANDLERS +=[(r"/chart/", ChartHandler)]

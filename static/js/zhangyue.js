@@ -1,4 +1,3 @@
-
 var setting = {
     callback: {
         onClick: onClick
@@ -33,7 +32,6 @@ function get_parent_tree() {
     return value_data
 }
 
-
 $(document).ready(function() {
 
     $.get("/get_base_node/",
@@ -67,8 +65,8 @@ $(document).ready(function() {
             alert("请先选择一个节点");
             return;
         } else {
-		var result = post_func(get_node_tree());
-            if ( String(result) != "false") {
+            var result = post_func(get_node_tree());
+            if (String(result) != "false") {
                 for (var i = 0,
                 l = nodes.length; i < l; i++) {
                     treeObj.removeNode(nodes[i]);
@@ -78,6 +76,7 @@ $(document).ready(function() {
 
     });
     //////////////////////
+    //需要获取函数里的函数的返回值,待改动
     function post_func(node) {
         var msg = "确定要删除吗?";
         if (confirm(msg) == true) {
@@ -86,6 +85,11 @@ $(document).ready(function() {
             },
             function(data) {
                 alert(data);
+		if(data =="无法删除节点"){
+			return false;
+		}
+
+
             });
         } else {
             return false;
@@ -205,8 +209,41 @@ $(document).ready(function() {
     });
     ////////////////////////////////////////////
     $("#batch_xiugai").click(function() {
-	$('#myModal_batch').modal('show');
+        $('#myModal_batch').modal('show');
         $('#add_node_name').attr("value", get_node_tree());
     });
+    ////////////////////////////////////////////
+    $("#batch_delete").click(function() {
+
+        var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+        var sNodes = treeObj.getSelectedNodes();
+        if (sNodes.length > 0) {
+            var isParent = sNodes[0].isParent;
+            if (String(isParent) != "false") {
+                var value_data = get_node_tree();
+		post_batch_delete(value_data);
+            } else {
+                alert("该节点为子节点,批量删除请选择父节点");
+            };
+        }else{
+	    alert("请先选择一个节点");                                                                                                                
+            return;
+	};
+
+    });
+    //////////////////////
+    function post_batch_delete(node) {
+        var msg = "确定要删除吗?";
+        if (confirm(msg) == true) {
+            $.post("/batch_delete/", {
+                node_key: node,
+            },
+            function(data) {
+                alert(data);
+            });
+        } else {
+            return false;
+        }
+    }
 
 });
