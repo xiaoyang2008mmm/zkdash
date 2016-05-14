@@ -134,3 +134,9 @@ class Login_Handler(BaseHandler):
     	   self.write("ok")
 	else:
     	   self.write("验证失败")
+
+class Logout_Handler(BaseHandler):
+    def get(self):
+	self.set_secure_cookie("user"," ")
+     	self.clear_cookie("user")
+     	self.redirect('/login/', permanent=True)

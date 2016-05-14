@@ -14,5 +14,6 @@ HANDLERS =[
 	   (r"/add_node/",		Add_Node),
 	   (r"/batch_delete/",		Hatch_Delete),
 	   (r"/login/",			Login_Handler),
+	   (r"/logout/", 		Logout_Handler), 
 	]
 #HANDLERS +=[(r"/chart/", ChartHandler)]
