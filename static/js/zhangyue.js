@@ -183,12 +183,12 @@ $(document).ready(function() {
         var node_name = $('#parent_node_name').attr("value");
         var new_node_name = $('#new_node_name').val();
         var new_node_value = $('#new_node_value').val();
-	if (node_name != "/"){
+        if (node_name != "/") {
             var New_post_node = node_name + "/" + new_node_name;
-	}else{
+        } else {
             var New_post_node = "/" + new_node_name;
-	    
-	}
+
+        }
         alert(New_post_node + new_node_value);
         if (new_node_name == "") {
             alert("新节点名必须增加");
@@ -246,15 +246,15 @@ $(document).ready(function() {
     });
     //////////////////////
     function post_batch_delete(node) {
-    var msg = "确定要删除吗?";
+        var msg = "确定要删除吗?";
         if (confirm(msg) == true) {
-         var res_msg =  $.post("/batch_delete/", {
+            var res_msg = $.post("/batch_delete/", {
                 node_key: node,
             },
-             function(data) {
+            function(data) {
                 alert(data);
             });
-	  return res_msg;
+            return res_msg;
         } else {
             return false;
         }
