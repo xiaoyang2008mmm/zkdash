@@ -109,6 +109,7 @@ class Add_Node(BaseHandler):
 	zk=zookeeper.init('127.0.0.1:2181')
 	new_node = (request_dict['New_post_node'])[0]
 	new_value = (request_dict['new_node_value'])[0]
+	print new_node
 	if zookeeper.exists(zk,new_node):
 	    zookeeper.close(zk)
 	    self.write("此节点存在")

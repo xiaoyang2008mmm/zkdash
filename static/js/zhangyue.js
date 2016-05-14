@@ -183,7 +183,12 @@ $(document).ready(function() {
         var node_name = $('#parent_node_name').attr("value");
         var new_node_name = $('#new_node_name').val();
         var new_node_value = $('#new_node_value').val();
-        var New_post_node = node_name + "/" + new_node_name;
+	if (node_name != "/"){
+            var New_post_node = node_name + "/" + new_node_name;
+	}else{
+            var New_post_node = "/" + new_node_name;
+	    
+	}
         alert(New_post_node + new_node_value);
         if (new_node_name == "") {
             alert("新节点名必须增加");
@@ -248,7 +253,7 @@ $(document).ready(function() {
                 node_key: node,
             },
             function(data) {
-                alert(data);
+                return data;
             });
         } else {
             return false;
