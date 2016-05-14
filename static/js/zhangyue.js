@@ -97,6 +97,16 @@ $(document).ready(function() {
 
     ////////////////////////
     $("#value_info").click(function() {
+
+
+        var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+        var nodes = treeObj.getSelectedNodes();
+        treeNode = nodes[0];
+        if (nodes.length == 0) {
+            alert("请先选择一个节点");
+            return;
+        } else {
+
         var value_data = get_node_tree();
         if (value_data == "/") {
             alert("根节点下无数据");
@@ -108,6 +118,7 @@ $(document).ready(function() {
                 alert(data);
 
             });
+        };
         };
     });
 
