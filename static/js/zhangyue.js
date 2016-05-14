@@ -227,7 +227,6 @@ $(document).ready(function() {
                 var value_data = get_node_tree();
 
                 var result = post_batch_delete(value_data);
-                alert(result);
 
                 if (String(result) != "false") {
                     for (var i = 0,
