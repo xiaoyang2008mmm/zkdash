@@ -2,6 +2,7 @@
 import tornado.web , os , json
 import  zookeeper
 from lib.zk import get_base
+from lib.email_auth import Mail
 
 class BaseHandler(tornado.web.RequestHandler):
     @property
@@ -26,7 +27,7 @@ class Get_Base_Node(BaseHandler):
 class Key_Json(BaseHandler):
 
     def get_node(self,node_key):
-	zk=zookeeper.init('10.46.162.118:2181')
+	zk=zookeeper.init('127.0.0.1:2181')
         if node_key == "/":
             for node in zookeeper.get_children(zk,node_key):
                  key =  "/" + node
@@ -69,7 +70,7 @@ class Get_Node_Value(BaseHandler):
     def post(self):
 	request_dict = self.request.arguments
 	node_id = (request_dict['choose_node'])[0]
-	zk=zookeeper.init('10.46.162.118:2181')
+	zk=zookeeper.init('127.0.0.1:2181')
 	_value = (zookeeper.get(zk,node_id))[0]
 	zookeeper.close(zk)
 	self.write(_value)
@@ -78,7 +79,7 @@ class Mod_Node_Value(BaseHandler):
 	request_dict = self.request.arguments
 	node_value = (request_dict['node_value'])[0]
 	node_name = (request_dict['node_name'])[0]
-	zk=zookeeper.init('10.46.162.118:2181')
+	zk=zookeeper.init('127.0.0.1:2181')
 	zookeeper.set(zk,node_name,node_value)
 	zookeeper.close(zk)
 	self.write("修改成功")
@@ -86,7 +87,7 @@ class Post_Delete(BaseHandler):
     def post(self):
 	request_dict = self.request.arguments
 	node_key = (request_dict['node_key'])[0]
-	zk=zookeeper.init('10.46.162.118:2181')
+	zk=zookeeper.init('127.0.0.1:2181')
 	try:
 	   zookeeper.delete(zk,node_key)
 	   msg = '删除成功'
@@ -99,7 +100,7 @@ class Add_Node(BaseHandler):
     def post(self):
 	request_dict = self.request.arguments
 	print request_dict
-	zk=zookeeper.init('10.46.162.118:2181')
+	zk=zookeeper.init('127.0.0.1:2181')
 	new_node = (request_dict['New_post_node'])[0]
 	new_value = (request_dict['new_node_value'])[0]
 	if zookeeper.exists(zk,new_node):
@@ -113,7 +114,23 @@ class Hatch_Delete(BaseHandler):
     def post(self):
 	request_dict = self.request.arguments
 	node_key = (request_dict['node_key'])[0]
-	zk=zookeeper.init('10.46.162.118:2181')
+	zk=zookeeper.init('127.0.0.1:2181')
 	#zookeeper.delete(zk,node_key)
 	zookeeper.close(zk)
 	self.write("删除成功")
+
+
+
+
+class Login_Handler(BaseHandler):
+    def get(self):
+        self.render('login.html') 
+    def post(self):
+	name = self.get_argument("login_username").encode("utf-8")
+	password = self.get_argument("login_password").encode("utf-8")
+        mail = Mail('smtp.exmail.qq.com', name, password)
+        auth_result = mail.send()
+        if auth_result == "OK":
+    	   self.write("ok")
+	else:
+    	   self.write("验证失败")

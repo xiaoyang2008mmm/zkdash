@@ -1,5 +1,5 @@
 import  zookeeper
-zk=zookeeper.init('10.46.162.118:2181')
+zk=zookeeper.init('127.0.0.1:2181')
  
 def get_node(node_key):
     data=[]
