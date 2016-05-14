@@ -231,8 +231,8 @@ $(document).ready(function() {
 
                 if (String(result) != "false") {
                     for (var i = 0,
-                    l = nodes.length; i < l; i++) {
-                        treeObj.removeNode(nodes[i]);
+                    l = sNodes.length; i < l; i++) {
+                        treeObj.removeNode(sNodes[i]);
                     }
                 }
 
@@ -247,14 +247,15 @@ $(document).ready(function() {
     });
     //////////////////////
     function post_batch_delete(node) {
-        var msg = "确定要删除吗?";
+    var msg = "确定要删除吗?";
         if (confirm(msg) == true) {
-            $.post("/batch_delete/", {
+         var res_msg =  $.post("/batch_delete/", {
                 node_key: node,
             },
-            function(data) {
-                return data;
+             function(data) {
+                alert(data);
             });
+	  return res_msg;
         } else {
             return false;
         }
