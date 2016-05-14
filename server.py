@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*- 
 import tornado.httpserver, os 
 import tornado.ioloop 
-import tornado.web
+import tornado.web , pyshell
 from handlers.handlers import HANDLERS , STATIC_PATH , TEMPLATE_PATH
 
 from tornado.options import define, options, parse_command_line
@@ -24,6 +24,11 @@ class Application(tornado.web.Application):
 
      	tornado.web.Application.__init__(self, handlers, **settings)
 	    	
+def make_clean():
+    '''清理pyc文件
+    '''
+    pyshell.command("find . -name '*.pyc' | xargs rm -rf" )
+
 
 def main():
     parse_command_line()
@@ -33,4 +38,5 @@ def main():
 
 
 if __name__ == "__main__":
+    make_clean()
     main()

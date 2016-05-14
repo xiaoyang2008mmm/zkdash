@@ -15,5 +15,7 @@ HANDLERS =[
 	   (r"/batch_delete/",		Batch_Delete),
 	   (r"/login/",			Login_Handler),
 	   (r"/logout/", 		Logout_Handler), 
+	   (r"/zk_page/", 		Zk_Page), 
+	   (r"/snapshot_page/", 	Snapshot_Page), 
 	]
 #HANDLERS +=[(r"/chart/", ChartHandler)]

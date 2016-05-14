@@ -167,3 +167,9 @@ class Logout_Handler(BaseHandler):
 	self.set_secure_cookie("user"," ")
      	self.clear_cookie("user")
      	self.redirect('/login/', permanent=True)
+class Zk_Page(BaseHandler):
+    def get(self):
+	self.render("zk_page.html")
+class Snapshot_Page(BaseHandler):
+    def get(self):
+	self.render("snapshot__page.html")
