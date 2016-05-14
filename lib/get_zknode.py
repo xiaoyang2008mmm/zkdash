@@ -1,5 +1,6 @@
 import  zookeeper
-zk=zookeeper.init('127.0.0.1:2181')
+from parserconf import get_zk_server
+zk=zookeeper.init(get_zk_server())
  
 def get_node(node_key):
     data=[]
