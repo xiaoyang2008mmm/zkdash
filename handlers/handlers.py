@@ -12,7 +12,7 @@ HANDLERS =[
 	   (r"/post_delete/",		Post_Delete),
 	   (r"/node_path/",		Node_Path),
 	   (r"/add_node/",		Add_Node),
-	   (r"/batch_delete/",		Hatch_Delete),
+	   (r"/batch_delete/",		Batch_Delete),
 	   (r"/login/",			Login_Handler),
 	   (r"/logout/", 		Logout_Handler), 
 	]

@@ -85,10 +85,9 @@ $(document).ready(function() {
             },
             function(data) {
                 alert(data);
-		if(data =="无法删除节点"){
-			return false;
-		}
-
+                if (data == "无法删除节点") {
+                    return false;
+                }
 
             });
         } else {
@@ -221,14 +220,24 @@ $(document).ready(function() {
             var isParent = sNodes[0].isParent;
             if (String(isParent) != "false") {
                 var value_data = get_node_tree();
-		post_batch_delete(value_data);
+
+                var result = post_batch_delete(value_data);
+                alert(result);
+
+                if (String(result) != "false") {
+                    for (var i = 0,
+                    l = nodes.length; i < l; i++) {
+                        treeObj.removeNode(nodes[i]);
+                    }
+                }
+
             } else {
                 alert("该节点为子节点,批量删除请选择父节点");
             };
-        }else{
-	    alert("请先选择一个节点");                                                                                                                
+        } else {
+            alert("请先选择一个节点");
             return;
-	};
+        };
 
     });
     //////////////////////

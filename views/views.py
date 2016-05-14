@@ -116,15 +116,31 @@ class Add_Node(BaseHandler):
 	    zookeeper.create(zk,new_node,new_value,[{"perms":0x1f,"scheme":"world","id":"anyone"}],0)	
 	    zookeeper.close(zk)
 	    self.write("增加成功")
-class Hatch_Delete(BaseHandler):
+class Batch_Delete(BaseHandler):
     def post(self):
 	request_dict = self.request.arguments
 	node_key = (request_dict['node_key'])[0]
 	zk=zookeeper.init('127.0.0.1:2181')
-	#zookeeper.delete(zk,node_key)
+
+	try:
+            if node_key == "/":
+                for node in zookeeper.get_children(zk,node_key):
+                     key =  "/" + node
+                     if (zookeeper.get(zk,key)[1])['numChildren'] > 0:
+                          get_node(key)
+    		     zookeeper.delete(zk,key)
+            else:
+                for node in zookeeper.get_children(zk,node_key):
+                     key =  node_key + "/" + node
+                     if (zookeeper.get(zk,key)[1])['numChildren'] > 0:
+                          get_node(key)
+    		     zookeeper.delete(zk,key)
+	except:
+	    pass
+	finally:
+		zookeeper.delete(zk,node_key)
 	zookeeper.close(zk)
 	self.write("删除成功")
-
 
 
 
@@ -137,7 +153,7 @@ class Login_Handler(BaseHandler):
         mail = Mail('smtp.exmail.qq.com', name, password)
         auth_result = mail.send()
         if auth_result == "OK":
-	   self.set_secure_cookie("user", name)
+	   self.set_secure_cookie("user", name.split("@")[0])
     	   self.write("ok")
 	else:
     	   self.write("验证失败")
