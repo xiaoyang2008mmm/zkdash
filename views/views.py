@@ -8,10 +8,16 @@ class BaseHandler(tornado.web.RequestHandler):
     @property
     def db(self):
        return self.application.db
+    def get_current_user(self):
+       return self.get_secure_cookie("user")
 
 class Base_Handler(BaseHandler):
+    '''
+    base.html获取当前用户
+    '''
     def get(self):
-	self.render("base.html")
+	current_user=self.get_current_user()
+	self.render("base.html",current_user=current_user)
 
 
 
@@ -131,6 +137,7 @@ class Login_Handler(BaseHandler):
         mail = Mail('smtp.exmail.qq.com', name, password)
         auth_result = mail.send()
         if auth_result == "OK":
+	   self.set_secure_cookie("user", name)
     	   self.write("ok")
 	else:
     	   self.write("验证失败")
