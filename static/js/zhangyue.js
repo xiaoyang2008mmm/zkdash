@@ -272,5 +272,24 @@ $(document).ready(function() {
             return false;
         }
     }
-
+    //////////////////////
+    $("#check_snapshot").click(function() {
+	alert("check_snapshot");
+    });
+    //////////////////////
+    $("#make_snapshot").click(function() {
+	alert("make_snapshot");
+    });
+    //////////////////////
+    $("#batch_snapshot").click(function() {
+	alert("batch_snapshot");
+    });
+    //////////////////////
+    $("#sync_case").click(function() {
+	alert("功能开发中....");
+    });
+    //////////////////////
+    $("#import").click(function() {
+	alert("功能开发中.....");
+    });
 });
