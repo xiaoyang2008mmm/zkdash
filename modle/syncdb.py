@@ -16,11 +16,11 @@ class BaseModel(Model):
         database = database
 
 class ZdSnapshot(BaseModel):
-    id = IntegerField(primary_key=True, constraints=[SQL("AUTO_INCREMENT")])
+    #id = IntegerField(primary_key=True, constraints=[SQL("AUTO_INCREMENT")])
     cluster_name = CharField(max_length=64, null=True)
     path = CharField(max_length=512, null=True)
-    data = TextField(null=True)
-    create_time = DateTimeField(null=True)
+    data = CharField(null=True)
+    #create_time = DateTimeField(null=True)
 
     class Meta(object):
 
@@ -29,4 +29,10 @@ class ZdSnapshot(BaseModel):
         db_table = "zd_snapshot"
 
 
-database.create_table(ZdSnapshot)
+
+if __name__ == "__main__":
+    try:
+        ZdSnapshot.create_table()    
+    except peewee.OperationalError:
+        print "ZdSnapshot table already exists!"
+

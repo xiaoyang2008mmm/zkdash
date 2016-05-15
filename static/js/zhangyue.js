@@ -274,11 +274,19 @@ $(document).ready(function() {
     }
     //////////////////////
     $("#check_snapshot").click(function() {
-	alert("check_snapshot");
+	var value_data = get_node_tree();
+	alert(value_data);
     });
     //////////////////////
     $("#make_snapshot").click(function() {
-	alert("make_snapshot");
+	var value_data = get_node_tree();
+
+        $.post("/m_snapshot/", {
+            node_tree: value_data,
+        },
+        function(data) {
+            alert(data);
+        });
     });
     //////////////////////
     $("#batch_snapshot").click(function() {

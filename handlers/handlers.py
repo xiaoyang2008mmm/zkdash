@@ -17,5 +17,6 @@ HANDLERS =[
 	   (r"/logout/", 		Logout_Handler), 
 	   (r"/zk_page/", 		Zk_Page), 
 	   (r"/snapshot_page/", 	Snapshot_Page), 
+	   (r"/m_snapshot/", 		M_Snapshot), 
 	]
 #HANDLERS +=[(r"/chart/", ChartHandler)]

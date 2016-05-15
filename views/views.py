@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*- 
 import tornado.web , os , json
-import  zookeeper
+import  zookeeper,time
 from lib.zk import get_base
 from lib.email_auth import Mail
 from lib.parserconf import *
@@ -173,3 +173,13 @@ class Zk_Page(BaseHandler):
 class Snapshot_Page(BaseHandler):
     def get(self):
 	self.render("snapshot__page.html")
+class M_Snapshot(BaseHandler):
+    def post(self):
+	request_dict = self.request.arguments
+	node_tree = (request_dict['node_tree'])[0]
+        zk=zookeeper.init(self.zk_Server())
+        _value = (zookeeper.get(zk,node_tree))[0]
+	create_time = time.time()
+        zookeeper.close(zk)
+        print (_value)
+	self.write("生成快照成功!!!!!")
