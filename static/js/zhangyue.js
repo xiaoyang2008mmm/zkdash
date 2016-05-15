@@ -115,7 +115,9 @@ $(document).ready(function() {
                 choose_node: value_data,
             },
             function(data) {
-                alert(data);
+		if(data==""){  var data="此节点下没有值"}
+                $('#display_value').text(data);
+                $('#check_myModal').modal('show');
 
             });
         };
