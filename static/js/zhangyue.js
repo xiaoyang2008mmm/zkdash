@@ -98,7 +98,6 @@ $(document).ready(function() {
     ////////////////////////
     $("#value_info").click(function() {
 
-
         var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
         var nodes = treeObj.getSelectedNodes();
         treeNode = nodes[0];
@@ -107,20 +106,22 @@ $(document).ready(function() {
             return;
         } else {
 
-        var value_data = get_node_tree();
-        if (value_data == "/") {
-            alert("根节点下无数据");
-        } else {
-            $.post("/get_node_value/", {
-                choose_node: value_data,
-            },
-            function(data) {
-		if(data==""){  var data="此节点下没有值"}
-                $('#display_value').text(data);
-                $('#check_myModal').modal('show');
+            var value_data = get_node_tree();
+            if (value_data == "/") {
+                alert("根节点下无数据");
+            } else {
+                $.post("/get_node_value/", {
+                    choose_node: value_data,
+                },
+                function(data) {
+                    if (data == "") {
+                        var data = "此节点下没有值"
+                    }
+                    $('#display_value').text(data);
+                    $('#check_myModal').modal('show');
 
-            });
-        };
+                });
+            };
         };
     });
 
@@ -274,14 +275,14 @@ $(document).ready(function() {
     }
     //////////////////////
     $("#check_snapshot").click(function() {
-	var value_data = get_node_tree();
-	alert(value_data);
+        var value_data = get_node_tree();
+        alert(value_data);
         $('#snapshot_myModal_info').modal('show');
     });
     //////////////////////
     $("#make_snapshot").click(function() {
-	var curr_node = get_node_tree();
-	MAKE_SNAPSHOST(curr_node);
+        var curr_node = get_node_tree();
+        MAKE_SNAPSHOST(curr_node);
 
     });
     //////////////////////
@@ -301,14 +302,30 @@ $(document).ready(function() {
     }
     //////////////////////
     $("#batch_snapshot").click(function() {
-	alert("batch_snapshot");
+        var curr_node = get_node_tree();
+        BATCH_SNAPSHOST(curr_node);
     });
     //////////////////////
+    function BATCH_SNAPSHOST(node) {
+        var msg = "确定要批量生成次节点下所有子节点的快照吗?";
+        if (confirm(msg) == true) {
+            var res_msg = $.post("/m_snapshot/", {
+                node_tree: node,
+            },
+            function(data) {
+                alert(data);
+            });
+            return res_msg;
+        } else {
+            return false;
+        }
+    }
+    //////////////////////
     $("#sync_case").click(function() {
-	alert("功能开发中....");
+        alert("功能开发中....");
     });
     //////////////////////
     $("#import").click(function() {
-	alert("功能开发中.....");
+        alert("功能开发中.....");
     });
 });
