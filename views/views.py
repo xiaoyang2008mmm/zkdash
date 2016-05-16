@@ -132,27 +132,35 @@ class Batch_Delete(BaseHandler):
 	node_key = (request_dict['node_key'])[0]
 	zk=zookeeper.init(self.zk_Server())
 
-	try:
+
+        data = []
+        def get_node_tree(node_key):
             if node_key == "/":
                 for node in zookeeper.get_children(zk,node_key):
                      key =  "/" + node
                      if (zookeeper.get(zk,key)[1])['numChildren'] > 0:
-                          get_node(key)
-    		     zookeeper.delete(zk,key)
+                          get_node_tree(key)
+                          print key
+                     else:
+                          print key
             else:
                 for node in zookeeper.get_children(zk,node_key):
                      key =  node_key + "/" + node
                      if (zookeeper.get(zk,key)[1])['numChildren'] > 0:
-                          get_node(key)
-    		     zookeeper.delete(zk,key)
-	except:
-	    pass
-	finally:
-		zookeeper.delete(zk,node_key)
-	zookeeper.close(zk)
-	self.write("删除成功")
+                          get_node_tree(key)
+                          data.append(key)
+                     else:
+                          data.append(key)
+        
+            return data
 
+	get_node_tree(node_key)
+	data.append(node_key)
 
+	for items in data:
+	    zookeeper.delete(zk,items)
+        zookeeper.close(zk)                                                                                                                          
+        self.write("删除成功")
 
 class Login_Handler(BaseHandler):
     def get(self):
