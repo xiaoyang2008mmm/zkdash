@@ -280,15 +280,25 @@ $(document).ready(function() {
     });
     //////////////////////
     $("#make_snapshot").click(function() {
-	var value_data = get_node_tree();
+	var curr_node = get_node_tree();
+	MAKE_SNAPSHOST(curr_node);
 
-        $.post("/m_snapshot/", {
-            node_tree: value_data,
-        },
-        function(data) {
-            alert(data);
-        });
     });
+    //////////////////////
+    function MAKE_SNAPSHOST(node) {
+        var msg = "确定要生成地节点的快照吗?";
+        if (confirm(msg) == true) {
+            var res_msg = $.post("/m_snapshot/", {
+                node_tree: node,
+            },
+            function(data) {
+                alert(data);
+            });
+            return res_msg;
+        } else {
+            return false;
+        }
+    }
     //////////////////////
     $("#batch_snapshot").click(function() {
 	alert("batch_snapshot");
