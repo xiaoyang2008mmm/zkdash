@@ -4,8 +4,14 @@ import  zookeeper,time
 from lib.zk import get_base
 from lib.email_auth import Mail
 from lib.parserconf import *
-
+import urlparse 
+from urllib import urlencode
+import functools
 class BaseHandler(tornado.web.RequestHandler):
+    def prepare(self):
+	if not self.request.uri.startswith(self.get_login_url()) and self.current_user is  None:
+	    self.redirect(self.get_login_url())
+	
     @property
     def zk_Server(self):
 	return get_zk_server
