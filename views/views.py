@@ -7,6 +7,7 @@ from lib.parserconf import *
 import urlparse 
 from urllib import urlencode
 import functools
+from  modle.syncdb import ZdSnapshot
 class BaseHandler(tornado.web.RequestHandler):
     def prepare(self):
 	if not self.request.uri.startswith(self.get_login_url()) and self.current_user is  None:
@@ -194,6 +195,21 @@ class M_Snapshot(BaseHandler):
         zk=zookeeper.init(self.zk_Server())
         _value = (zookeeper.get(zk,node_tree))[0]
 	create_time = time.time()
+	table = ZdSnapshot(cluster_name="test",path=node_tree , data=_value ,create_time="2011-11-11 11:11:11")
+	table.save()
         zookeeper.close(zk)
         print (_value)
 	self.write("生成快照成功!!!!!")
+class Check_Snapshot(BaseHandler):
+    def post(self):
+	data=[]
+	request_dict = self.request.arguments
+	node_tree = (request_dict['node_key'])[0]
+	query = ZdSnapshot.select().where(ZdSnapshot.path == node_tree)
+	for i in query:
+	    print i.id
+	    print i.cluster_name
+	    print i.path
+	    print i.data
+	    print i.create_time
+	self.write("OK")

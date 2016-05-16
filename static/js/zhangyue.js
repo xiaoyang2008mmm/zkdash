@@ -276,7 +276,12 @@ $(document).ready(function() {
     //////////////////////
     $("#check_snapshot").click(function() {
         var value_data = get_node_tree();
-        alert(value_data);
+            $.post("/check_snapshot/", {
+                node_key: value_data,
+            },
+            function(data) {
+                alert(data);
+            });
         $('#snapshot_myModal_info').modal('show');
     });
     //////////////////////

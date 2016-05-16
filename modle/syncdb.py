@@ -2,11 +2,18 @@
 from peewee import *
 import sys
 
-sys.path.append('../lib')
+try:
+    sys.path.append('../lib')
+    sys.path.append('./lib')
+except:
+    print "导入lib库失败" 
 
 from parserconf import get_mysql_server
 
-database = MySQLDatabase(**get_mysql_server(file="../conf/mysql.conf"))
+try:
+    database = MySQLDatabase(**get_mysql_server(file="../conf/mysql.conf"))
+except:
+    database = MySQLDatabase(**get_mysql_server(file="./conf/mysql.conf"))
 
 class UnknownField(object):
     pass
