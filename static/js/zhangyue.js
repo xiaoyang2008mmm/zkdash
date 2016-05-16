@@ -276,6 +276,7 @@ $(document).ready(function() {
     $("#check_snapshot").click(function() {
 	var value_data = get_node_tree();
 	alert(value_data);
+        $('#snapshot_myModal_info').modal('show');
     });
     //////////////////////
     $("#make_snapshot").click(function() {
