@@ -323,14 +323,22 @@ $(document).ready(function() {
     }
     //////////////////////
     $("#batch_snapshot").click(function() {
+        var treeObj = $.fn.zTree.getZTreeObj("treeDemo");                                                                                             
+        var nodes = treeObj.getSelectedNodes();                                                                                                       
+        treeNode = nodes[0];                                                                                                                          
+        if (nodes.length == 0) {                                                                                                                      
+            alert("请先选择一个节点");                                                                                                                
+            return;                                                                                                                                   
+        } else {
         var curr_node = get_node_tree();
         BATCH_SNAPSHOST(curr_node);
+	}
     });
     //////////////////////
     function BATCH_SNAPSHOST(node) {
         var msg = "确定要批量生成次节点下所有子节点的快照吗?";
         if (confirm(msg) == true) {
-            var res_msg = $.post("/m_snapshot/", {
+            var res_msg = $.post("/batch_m_snapshot/", {
                 node_tree: node,
             },
             function(data) {

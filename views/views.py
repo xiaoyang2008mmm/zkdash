@@ -21,6 +21,9 @@ class BaseHandler(tornado.web.RequestHandler):
     def get_current_user(self):
        return self.get_secure_cookie("user")
 
+    def GetNowTime(self):
+    	return time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(time.time()))
+
 class Base_Handler(BaseHandler):
     '''
     base.html获取当前用户
@@ -199,7 +202,7 @@ class M_Snapshot(BaseHandler):
         zk=zookeeper.init(self.zk_Server())
         _value = (zookeeper.get(zk,node_tree))[0]
 	create_time = time.time()
-	table = ZdSnapshot(cluster_name="test",path=node_tree , data=_value ,create_time="2011-11-11 11:11:11")
+	table = ZdSnapshot(cluster_name="test",path=node_tree , data=_value ,create_time = self.GetNowTime())
 	table.save()
         zookeeper.close(zk)
         print (_value)
@@ -234,3 +237,16 @@ class Validate_Snapshot(BaseHandler):
 	except:
 	    self.write("ERROR")
 		
+class Batch_Make_Snapshot(BaseHandler):
+    """批量生成快照"""
+    def post(self):
+	request_dict = self.request.arguments
+	node_tree = (request_dict['node_tree'])[0]
+        zk=zookeeper.init(self.zk_Server())
+        _value = (zookeeper.get(zk,node_tree))[0]
+	create_time = time.time()
+	table = ZdSnapshot(cluster_name="test",path=node_tree , data=_value ,create_time=self.GetNowTime())
+	table.save()
+        zookeeper.close(zk)
+        print (_value)
+	self.write("生成快照成功!!!!!")
