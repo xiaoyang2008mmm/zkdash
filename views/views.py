@@ -88,6 +88,7 @@ class Get_Node_Value(BaseHandler):
 	node_id = (request_dict['choose_node'])[0]
 	zk=zookeeper.init(self.zk_Server())
 	_value = (zookeeper.get(zk,node_id))[0]
+	print _value
 	zookeeper.close(zk)
 	self.write(_value)
 class Mod_Node_Value(BaseHandler):
