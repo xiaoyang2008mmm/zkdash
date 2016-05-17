@@ -357,4 +357,8 @@ $(document).ready(function() {
     $("#import").click(function() {
         alert("功能开发中.....");
     });
+    //////////////////////
+    $("#add_host").click(function() {
+        $('#add_host_modal').modal('show');
+    });
 });

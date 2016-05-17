@@ -7,7 +7,7 @@ from lib.parserconf import *
 import urlparse 
 from urllib import urlencode
 import functools
-from  modle.syncdb import ZdSnapshot
+from  modle.syncdb import *
 class BaseHandler(tornado.web.RequestHandler):
     def prepare(self):
 	if not self.request.uri.startswith(self.get_login_url()) and self.current_user is  None:
@@ -190,7 +190,9 @@ class Logout_Handler(BaseHandler):
      	self.redirect('/login/', permanent=True)
 class Zk_Page(BaseHandler):
     def get(self):
-	self.render("zk_page.html")
+	query_result = ZdZookeeper.select()
+	_dict = {"all_zk_hosts" : query_result}
+        self.render("zk_page.html", **_dict)
 class Snapshot_Page(BaseHandler):
     def get(self):
 	self.render("snapshot__page.html")
@@ -248,6 +250,7 @@ class Batch_Make_Snapshot(BaseHandler):
 	self.write("生成快照成功!!!!!")
 
     def get_node(self,node_key):
+	"""获取子节点生成快照存到MySQL"""
         zk=zookeeper.init(self.zk_Server())
         if node_key == "/":
             for node in zookeeper.get_children(zk,node_key):
@@ -255,7 +258,6 @@ class Batch_Make_Snapshot(BaseHandler):
                  if (zookeeper.get(zk,key)[1])['numChildren'] > 0:
                       self.get_node(key)
                  else:
-                      print "#################",key
         	      value = (zookeeper.get(zk,key))[0]
 		      create_time = time.time()
 		      table = ZdSnapshot(cluster_name="test",path=key , data=value ,create_time=self.GetNowTime())
@@ -266,7 +268,6 @@ class Batch_Make_Snapshot(BaseHandler):
                  if (zookeeper.get(zk,key)[1])['numChildren'] > 0:
                       self.get_node(key)
                  else:
-                      print "#################",key
         	      value = (zookeeper.get(zk,key))[0]
 		      create_time = time.time()
 		      table = ZdSnapshot(cluster_name="test",path=key , data=value ,create_time=self.GetNowTime())

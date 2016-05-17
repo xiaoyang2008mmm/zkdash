@@ -5,7 +5,7 @@
   <div class="btn-group">
     <button type="button" class="btn btn-primary">
       <span class="glyphicon glyphicon-pencil"></span>修改</button>
-    <button type="button" class="btn btn-success">
+    <button type="button" class="btn btn-success" id="add_host">
       <span class="glyphicon glyphicon-plus"></span>新增</button>
     <button type="button" class="btn btn-info">
       <span class="glyphicon glyphicon-minus"></span>删除</button>
@@ -22,16 +22,22 @@
       <th>操作</th></tr>
   </thead>
   <tbody>
+{% for host in all_zk_hosts %}
     <tr>
-      <td>Tanmay</td>
-      <td>Bangalore</td>
-      <td>560001</td>
+      <td>{{host.cluster_name}}</td>
+      <td>{{host.hosts}}</td>
+      <td>{{host.business}}</td>
       <td>
         <label class="checkbox-inline">
           <input type="checkbox" id="inlineCheckbox1" value="option1"></label>
       </td>
     </tr>
+{% end %}
   </tbody>
 </table>
+
+
+{% include hosts/add_host.html %}
+
 
 {%end%}
