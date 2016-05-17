@@ -361,4 +361,29 @@ $(document).ready(function() {
     $("#add_host").click(function() {
         $('#add_host_modal').modal('show');
     });
+    //////////////////////
+    $("#AddHost_btn").click(function() {
+        var cluster_name = $('#cluster_name').val();
+        var cluster_conf = $('#cluster_conf').val();
+        var cluster_lable = $('#cluster_lable').val();
+	alert(cluster_name + cluster_conf + cluster_lable);
+
+
+        if (cluster_name  == "" || cluster_conf == "") {
+            alert("集群名称或者配置不能为空");
+        } else {
+            $.post("/cluster_operation/", {
+                cluster_conf: cluster_conf,
+                cluster_name: cluster_name,
+                cluster_lable: cluster_lable,
+                operation: "cluster_add",
+            },
+            function(data) {
+                alert(data);
+            });
+            location.href = '/zk_page/';
+        };
+
+
+    });
 });

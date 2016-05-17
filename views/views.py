@@ -276,3 +276,15 @@ class Batch_Make_Snapshot(BaseHandler):
     
 
 
+class Cluster_Operation(BaseHandler):
+    """ZK集群主机信息到MySQL数据库"""
+    def post(self):
+        request_dict = self.request.arguments
+        operation = (request_dict['operation'])[0]
+	if operation == "cluster_add":
+	    cluster_conf = (request_dict['cluster_conf'])[0]
+	    cluster_name = (request_dict['cluster_name'])[0]
+	    cluster_lable = (request_dict['cluster_lable'])[0] 
+	    table = ZdZookeeper(cluster_name=cluster_name ,hosts=cluster_conf , business=cluster_lable)
+	    table.save()
+	    self.write("保存成功!!!!!")
