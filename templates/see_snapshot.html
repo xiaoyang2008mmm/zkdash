@@ -1,37 +1,32 @@
-<div class="modal fade" id="snapshot_myModal_info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">快照查看</h4></div>
-      <div class="modal-body">
+{% extends "base.html" %}
+{% block body %}
+
         <table class="table table-striped table-bordered table-condensed ">
           <thead>
             <tr>
-              <th>快照路劲</th>
-              <th>快照生成时间</th>
-              <th>快照状态</th>
+              <th>序号</th>
+              <th>集群名称</th>
+              <th>快照路径</th>
               <th>快照值</th>
+              <th>快照时间</th>
               <th>操作</th></tr>
           </thead>
           <tbody>
+	{% for key in history_snapshot %}  
             <tr>
-              <td>Tanmay</td>
-              <td>Bangalore</td>
-              <td>560001</td>
-              <td>560001</td>
+              <td>{{key[0]}}</td>
+              <td>{{key[1]}}</td>
+              <td>{{key[2]}}</td>
+              <td>{{key[3]}}</td>
+              <td>{{key[4]}}</td>
               <td>
                 <div class="btn-group">
                   <button type="button" class="btn btn-info">回滚</button>
                   <button type="button" class="btn btn-danger">删除</button></div>
               </td>
             </tr>
+	{% end %}  
           </tbody>
         </table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-primary">提交更改</button></div>
-    </div>
-  </div>
-</div>
+
+{% end %}

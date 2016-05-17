@@ -164,6 +164,7 @@ class Batch_Delete(BaseHandler):
         self.write("删除成功")
 
 class Login_Handler(BaseHandler):
+    """登录验证"""
     def get(self):
         self.render('login.html') 
     def post(self):
@@ -178,6 +179,7 @@ class Login_Handler(BaseHandler):
     	   self.write("验证失败")
 
 class Logout_Handler(BaseHandler):
+    """退出"""
     def get(self):
 	self.set_secure_cookie("user"," ")
      	self.clear_cookie("user")
@@ -189,6 +191,7 @@ class Snapshot_Page(BaseHandler):
     def get(self):
 	self.render("snapshot__page.html")
 class M_Snapshot(BaseHandler):
+    """生成快照"""
     def post(self):
 	request_dict = self.request.arguments
 	node_tree = (request_dict['node_tree'])[0]
@@ -201,15 +204,32 @@ class M_Snapshot(BaseHandler):
         print (_value)
 	self.write("生成快照成功!!!!!")
 class Check_Snapshot(BaseHandler):
+    """查看快照"""
+    def get(self,key_node):
+	print key_node
+	data = []
+	all = []
+	query = ZdSnapshot.select().where(ZdSnapshot.path == key_node)
+	for i in query:
+	    data.append(i.id)
+	    data.append(i.cluster_name)
+	    data.append(i.path)
+	    data.append(i.data)
+	    data.append(i.create_time)
+	    all.append(data)
+	    data = []
+	print all
+	_dict = {"history_snapshot" : all}
+	self.render("see_snapshot.html", **_dict)
+
+class Validate_Snapshot(BaseHandler):
+    """验证node的快照是否存在"""
     def post(self):
-	data=[]
 	request_dict = self.request.arguments
 	node_tree = (request_dict['node_key'])[0]
-	query = ZdSnapshot.select().where(ZdSnapshot.path == node_tree)
-	for i in query:
-	    print i.id
-	    print i.cluster_name
-	    print i.path
-	    print i.data
-	    print i.create_time
-	self.write("OK")
+	try:
+	    ZdSnapshot.get(ZdSnapshot.path == node_tree)
+	    self.write("OK")
+	except:
+	    self.write("ERROR")
+		

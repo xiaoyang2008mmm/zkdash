@@ -18,6 +18,7 @@ HANDLERS =[
 	   (r"/zk_page/", 		Zk_Page), 
 	   (r"/snapshot_page/", 	Snapshot_Page), 
 	   (r"/m_snapshot/", 		M_Snapshot), 
-	   (r"/check_snapshot/", 	Check_Snapshot), 
+	   (r"/validate_snapshot/", 	Validate_Snapshot), 
 	]
-#HANDLERS +=[(r"/chart/", ChartHandler)]
+
+HANDLERS +=[(r"/check_snapshot/key_node=(.*)/",  Check_Snapshot)]

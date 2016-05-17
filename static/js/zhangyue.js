@@ -275,14 +275,30 @@ $(document).ready(function() {
     }
     //////////////////////
     $("#check_snapshot").click(function() {
-        var value_data = get_node_tree();
-            $.post("/check_snapshot/", {
+        var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+        var nodes = treeObj.getSelectedNodes();
+        treeNode = nodes[0];
+        if (nodes.length == 0) {
+            alert("请先选择一个节点");
+            return;
+        } else {
+            var value_data = get_node_tree();
+
+            $.post("/validate_snapshot/", {
                 node_key: value_data,
             },
             function(data) {
-                alert(data);
+                if (data == "OK") {
+
+                    location.href = '/check_snapshot/key_node=' + value_data + "/";
+                }else{
+                    alert("此节点下没有快照!!!!!!");
+		    
+		}
+		
             });
-        $('#snapshot_myModal_info').modal('show');
+
+        }
     });
     //////////////////////
     $("#make_snapshot").click(function() {
