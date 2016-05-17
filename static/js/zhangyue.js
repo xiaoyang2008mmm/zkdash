@@ -386,4 +386,12 @@ $(document).ready(function() {
 
 
     });
+    //////////////////////
+    $("#delete_host").click(function() {
+        var $radio= $("#table input:radio:checked").parent().parent().parent();
+        var $row=parseInt($radio.index()) + 1;
+        var $c_name=$("#table tr:eq("+$row+") td:nth-child(1)").html();
+        var $c_conf=$("#table tr:eq("+$row+") td:nth-child(2)").html();
+	alert($c_name+"#######"+$c_conf);
+    });
 });

@@ -7,13 +7,13 @@
       <span class="glyphicon glyphicon-pencil"></span>修改</button>
     <button type="button" class="btn btn-success" id="add_host">
       <span class="glyphicon glyphicon-plus"></span>新增</button>
-    <button type="button" class="btn btn-info">
+    <button type="button" class="btn btn-info" id="delete_host">
       <span class="glyphicon glyphicon-minus"></span>删除</button>
     <button type="button" class="btn btn-warning">
       <span class="glyphicon glyphicon-asterisk"></span>状态查看</button>
   </div>
 </div>
-<table class="table table-bordered table-striped table-bordered table-condensed">
+<table class="table table-bordered table-striped table-bordered table-condensed" id="table">
   <thead>
     <tr>
       <th>集群名称</th>
@@ -29,7 +29,7 @@
       <td>{{host.business}}</td>
       <td>
         <label class="checkbox-inline">
-          <input type="checkbox" id="inlineCheckbox1" value="option1"></label>
+	  <input type="radio" name="aa"  value="" checked> </label>
       </td>
     </tr>
 {% end %}
