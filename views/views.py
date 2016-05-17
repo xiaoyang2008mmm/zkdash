@@ -241,12 +241,37 @@ class Batch_Make_Snapshot(BaseHandler):
     """批量生成快照"""
     def post(self):
 	request_dict = self.request.arguments
-	node_tree = (request_dict['node_tree'])[0]
-        zk=zookeeper.init(self.zk_Server())
-        _value = (zookeeper.get(zk,node_tree))[0]
-	create_time = time.time()
-	table = ZdSnapshot(cluster_name="test",path=node_tree , data=_value ,create_time=self.GetNowTime())
-	table.save()
-        zookeeper.close(zk)
-        print (_value)
+	node_key = (request_dict['node_tree'])[0]
+
+	self.get_node(node_key)
+
 	self.write("生成快照成功!!!!!")
+
+    def get_node(self,node_key):
+        zk=zookeeper.init(self.zk_Server())
+        if node_key == "/":
+            for node in zookeeper.get_children(zk,node_key):
+                 key =  "/" + node
+                 if (zookeeper.get(zk,key)[1])['numChildren'] > 0:
+                      self.get_node(key)
+                 else:
+                      print "#################",key
+        	      value = (zookeeper.get(zk,key))[0]
+		      create_time = time.time()
+		      table = ZdSnapshot(cluster_name="test",path=key , data=value ,create_time=self.GetNowTime())
+		      table.save()
+        else:
+            for node in zookeeper.get_children(zk,node_key):
+                 key =  node_key + "/" + node
+                 if (zookeeper.get(zk,key)[1])['numChildren'] > 0:
+                      self.get_node(key)
+                 else:
+                      print "#################",key
+        	      value = (zookeeper.get(zk,key))[0]
+		      create_time = time.time()
+		      table = ZdSnapshot(cluster_name="test",path=key , data=value ,create_time=self.GetNowTime())
+		      table.save()
+        zookeeper.close(zk)
+    
+
+
