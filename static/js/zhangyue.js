@@ -390,6 +390,13 @@ $(document).ready(function() {
         var $radio= $("#table input:radio:checked").parent().parent().parent();
         var $row=parseInt($radio.index()) + 1;
         var $c_name=$("#table tr:eq("+$row+") td:nth-child(1)").html();
+	delete_cluster($c_name) ;
+    });
+
+    //////////////////////////////
+    function delete_cluster($c_name) {
+        var msg = "确定要删除吗?";
+        if (confirm(msg) == true) {
             $.post("/cluster_operation/", {
                 cluster_name: $c_name,
                 operation: "cluster_delete",
@@ -398,5 +405,11 @@ $(document).ready(function() {
                 alert(data);
             });
             location.href = '/zk_page/';
-    });
+        } else {
+            return false;
+        }
+    }
+
+
+
 });
