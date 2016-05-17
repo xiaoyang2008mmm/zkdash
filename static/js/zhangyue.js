@@ -291,20 +291,27 @@ $(document).ready(function() {
                 if (data == "OK") {
 
                     location.href = '/check_snapshot/key_node=' + value_data + "/";
-                }else{
+                } else {
                     alert("此节点下没有快照!!!!!!");
-		    
-		}
-		
+
+                }
+
             });
 
         }
     });
     //////////////////////
     $("#make_snapshot").click(function() {
+        var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+        var nodes = treeObj.getSelectedNodes();
+        treeNode = nodes[0];
+        if (nodes.length == 0) {
+            alert("请先选择一个节点");
+            return;
+        } else {
         var curr_node = get_node_tree();
         MAKE_SNAPSHOST(curr_node);
-
+	}
     });
     //////////////////////
     function MAKE_SNAPSHOST(node) {
@@ -323,16 +330,16 @@ $(document).ready(function() {
     }
     //////////////////////
     $("#batch_snapshot").click(function() {
-        var treeObj = $.fn.zTree.getZTreeObj("treeDemo");                                                                                             
-        var nodes = treeObj.getSelectedNodes();                                                                                                       
-        treeNode = nodes[0];                                                                                                                          
-        if (nodes.length == 0) {                                                                                                                      
-            alert("请先选择一个节点");                                                                                                                
-            return;                                                                                                                                   
+        var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+        var nodes = treeObj.getSelectedNodes();
+        treeNode = nodes[0];
+        if (nodes.length == 0) {
+            alert("请先选择一个节点");
+            return;
         } else {
-        var curr_node = get_node_tree();
-        BATCH_SNAPSHOST(curr_node);
-	}
+            var curr_node = get_node_tree();
+            BATCH_SNAPSHOST(curr_node);
+        }
     });
     //////////////////////
     function BATCH_SNAPSHOST(node) {
@@ -367,8 +374,7 @@ $(document).ready(function() {
         var cluster_conf = $('#cluster_conf').val();
         var cluster_lable = $('#cluster_lable').val();
 
-
-        if (cluster_name  == "" || cluster_conf == "") {
+        if (cluster_name == "" || cluster_conf == "") {
             alert("集群名称或者配置不能为空");
         } else {
             $.post("/cluster_operation/", {
@@ -383,14 +389,13 @@ $(document).ready(function() {
             location.href = '/zk_page/';
         };
 
-
     });
     //////////////////////
     $("#delete_host").click(function() {
-        var $radio= $("#table input:radio:checked").parent().parent().parent();
-        var $row=parseInt($radio.index()) + 1;
-        var $c_name=$("#table tr:eq("+$row+") td:nth-child(1)").html();
-	delete_cluster($c_name) ;
+        var $radio = $("#table input:radio:checked").parent().parent().parent();
+        var $row = parseInt($radio.index()) + 1;
+        var $c_name = $("#table tr:eq(" + $row + ") td:nth-child(1)").html();
+        delete_cluster($c_name);
     });
 
     //////////////////////////////
@@ -409,7 +414,5 @@ $(document).ready(function() {
             return false;
         }
     }
-
-
 
 });
