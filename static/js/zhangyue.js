@@ -366,7 +366,6 @@ $(document).ready(function() {
         var cluster_name = $('#cluster_name').val();
         var cluster_conf = $('#cluster_conf').val();
         var cluster_lable = $('#cluster_lable').val();
-	alert(cluster_name + cluster_conf + cluster_lable);
 
 
         if (cluster_name  == "" || cluster_conf == "") {
@@ -391,7 +390,13 @@ $(document).ready(function() {
         var $radio= $("#table input:radio:checked").parent().parent().parent();
         var $row=parseInt($radio.index()) + 1;
         var $c_name=$("#table tr:eq("+$row+") td:nth-child(1)").html();
-        var $c_conf=$("#table tr:eq("+$row+") td:nth-child(2)").html();
-	alert($c_name+"#######"+$c_conf);
+            $.post("/cluster_operation/", {
+                cluster_name: $c_name,
+                operation: "cluster_delete",
+            },
+            function(data) {
+                alert(data);
+            });
+            location.href = '/zk_page/';
     });
 });

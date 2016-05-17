@@ -288,3 +288,8 @@ class Cluster_Operation(BaseHandler):
 	    table = ZdZookeeper(cluster_name=cluster_name ,hosts=cluster_conf , business=cluster_lable)
 	    table.save()
 	    self.write("保存成功!!!!!")
+	if operation == "cluster_delete":
+	    c_name = (request_dict['cluster_name'])[0]
+	    query = ZdZookeeper.get(ZdZookeeper.cluster_name == c_name ) 
+	    query.delete_instance()
+	    self.write("删除成功!!!!!")
