@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*- 
 import tornado.web , os , json
 import  zookeeper,time
-from lib.zk import get_base
 from lib.email_auth import Mail
 from lib.parserconf import *
 import urlparse 
@@ -42,9 +41,6 @@ class Config_Mangager(BaseHandler):
         self.render("config_mangager.html", **_dict)
 
 
-class Get_Base_Node(BaseHandler):
-    def get(self):
-	self.write(get_base())
 
 
 

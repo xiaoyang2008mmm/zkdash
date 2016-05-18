@@ -34,10 +34,6 @@ function get_parent_tree() {
 
 $(document).ready(function() {
 
-    $.get("/get_base_node/",
-    function(data, status) {
-        $.fn.zTree.init($("#treeDemo"), setting, JSON.parse(data));
-    });
 
     ////////////////////////
     $("#node_search").click(function() {
