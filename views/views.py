@@ -14,8 +14,6 @@ class BaseHandler(tornado.web.RequestHandler):
 	    self.redirect(self.get_login_url())
 	
     @property
-    def zk_Server(self):
-	return get_zk_server
     def db(self):
        return self.application.db
     def get_current_user(self):
@@ -145,7 +143,8 @@ class Batch_Delete(BaseHandler):
     def post(self):
 	request_dict = self.request.arguments
 	node_key = (request_dict['node_key'])[0]
-	zk=zookeeper.init(self.zk_Server())
+        cluster_name  = (request_dict['cluster_name'])[0]
+        zk=zookeeper.init(self.zk_connect(cluster_name))
 
 
         data = []
@@ -211,7 +210,8 @@ class M_Snapshot(BaseHandler):
     def post(self):
 	request_dict = self.request.arguments
 	node_tree = (request_dict['node_tree'])[0]
-        zk=zookeeper.init(self.zk_Server())
+        cluster_name  = (request_dict['cluster_name'])[0]
+        zk=zookeeper.init(self.zk_connect(cluster_name))
         _value = (zookeeper.get(zk,node_tree))[0]
 	create_time = time.time()
 	table = ZdSnapshot(cluster_name="test",path=node_tree , data=_value ,create_time = self.GetNowTime())
@@ -255,33 +255,33 @@ class Batch_Make_Snapshot(BaseHandler):
 	request_dict = self.request.arguments
 	node_key = (request_dict['node_tree'])[0]
 
-	self.get_node(node_key)
+        cluster_name  = (request_dict['cluster_name'])[0]
+        zk=zookeeper.init(self.zk_connect(cluster_name))
 
+        def get_node(node_key):
+    	    """获取子节点生成快照存到MySQL"""
+            if node_key == "/":
+                for node in zookeeper.get_children(zk,node_key):
+                     key =  "/" + node
+                     if (zookeeper.get(zk,key)[1])['numChildren'] > 0:
+                          get_node(key)
+                     else:
+            	          value = (zookeeper.get(zk,key))[0]
+    		          create_time = time.time()
+    		          table = ZdSnapshot(cluster_name="test",path=key , data=value ,create_time=self.GetNowTime())
+    		          table.save()
+            else:
+                for node in zookeeper.get_children(zk,node_key):
+                     key =  node_key + "/" + node
+                     if (zookeeper.get(zk,key)[1])['numChildren'] > 0:
+                          get_node(key)
+                     else:
+            	          value = (zookeeper.get(zk,key))[0]
+    		          create_time = time.time()
+    		          table = ZdSnapshot(cluster_name="test",path=key , data=value ,create_time=self.GetNowTime())
+    		          table.save()
+	get_node(node_key)
 	self.write("生成快照成功!!!!!")
-
-    def get_node(self,node_key):
-	"""获取子节点生成快照存到MySQL"""
-        zk=zookeeper.init(self.zk_Server())
-        if node_key == "/":
-            for node in zookeeper.get_children(zk,node_key):
-                 key =  "/" + node
-                 if (zookeeper.get(zk,key)[1])['numChildren'] > 0:
-                      self.get_node(key)
-                 else:
-        	      value = (zookeeper.get(zk,key))[0]
-		      create_time = time.time()
-		      table = ZdSnapshot(cluster_name="test",path=key , data=value ,create_time=self.GetNowTime())
-		      table.save()
-        else:
-            for node in zookeeper.get_children(zk,node_key):
-                 key =  node_key + "/" + node
-                 if (zookeeper.get(zk,key)[1])['numChildren'] > 0:
-                      self.get_node(key)
-                 else:
-        	      value = (zookeeper.get(zk,key))[0]
-		      create_time = time.time()
-		      table = ZdSnapshot(cluster_name="test",path=key , data=value ,create_time=self.GetNowTime())
-		      table.save()
         zookeeper.close(zk)
     
 

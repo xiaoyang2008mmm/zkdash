@@ -104,19 +104,20 @@ $(document).ready(function() {
 
         var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
         var nodes = treeObj.getSelectedNodes();
+	var name = $("#select_list option:selected").text(); 
+	alert(name)
         treeNode = nodes[0];
         if (nodes.length == 0) {
             alert("请先选择一个节点");
             return;
         } else {
-	    var $name = $("#select_list option:selected").text(); 
             var value_data = get_node_tree();
             if (value_data == "/") {
                 alert("根节点下无数据");
             } else {
                 $.post("/get_node_value/", {
                     choose_node: value_data,
-		    cluster_name: $name,
+		    cluster_name: name,
                 },
                 function(data) {
                     if (data == "") {
@@ -157,11 +158,13 @@ $(document).ready(function() {
     $("#value_change").click(function() {
 
         var value_data = get_node_tree();
+	var $name = $("#select_list option:selected").text(); 
         if (value_data == "/") {
             alert("根节点不能修改");
         } else {
 
             $.post("/get_node_value/", {
+		cluster_name: $name,
                 choose_node: value_data,
             },
             function(data) {
@@ -178,6 +181,7 @@ $(document).ready(function() {
         var node_name = $('#node_name').attr("value");
         var node_value = $('#node_value').val();
 	var $name = $("#select_list option:selected").text();
+	alert($name)
 
         $.post("/mod_node_value/", {
             node_name: node_name,
@@ -270,9 +274,11 @@ $(document).ready(function() {
     //////////////////////
     function post_batch_delete(node) {
         var msg = "确定要删除吗?";
+        var $name = $("#select_list option:selected").text();
         if (confirm(msg) == true) {
             var res_msg = $.post("/batch_delete/", {
                 node_key: node,
+		cluster_name: $name, 
             },
             function(data) {
                 alert(data);
@@ -325,9 +331,11 @@ $(document).ready(function() {
     //////////////////////
     function MAKE_SNAPSHOST(node) {
         var msg = "确定要生成地节点的快照吗?";
+        var $name = $("#select_list option:selected").text();
         if (confirm(msg) == true) {
             var res_msg = $.post("/m_snapshot/", {
                 node_tree: node,
+		cluster_name: $name,
             },
             function(data) {
                 alert(data);
@@ -354,8 +362,10 @@ $(document).ready(function() {
     function BATCH_SNAPSHOST(node) {
         var msg = "确定要批量生成次节点下所有子节点的快照吗?";
         if (confirm(msg) == true) {
+            var $name = $("#select_list option:selected").text();
             var res_msg = $.post("/batch_m_snapshot/", {
                 node_tree: node,
+		cluster_name: $name,
             },
             function(data) {
                 alert(data);
