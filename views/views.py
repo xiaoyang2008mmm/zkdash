@@ -36,7 +36,10 @@ class Base_Handler(BaseHandler):
 
 class Config_Mangager(BaseHandler):
     def get(self):
-	self.render("config_mangager.html")
+	query_result = ZdZookeeper.select()
+	_dict = {"all_cluster_name" : query_result}
+        self.render("config_mangager.html", **_dict)
+
 
 class Get_Base_Node(BaseHandler):
     def get(self):

@@ -8,7 +8,7 @@ $(document).ready(function() {
         },
         function(data) {
             if (data =="ok"){
-		    location.href = '/config_mangager/';
+		    location.href = '/';
 		}else{
 		    alert(data);
 		}

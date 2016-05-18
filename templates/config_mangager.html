@@ -16,10 +16,11 @@
           <label class="col-sm-1 control-label text-right" for="inputSuccess">集群名称:</label>
           <div class="col-sm-2">
             <div class="form-group">
-              <select class="form-control input-sm">
-                <option value="">test</option>
-                <option value="">test</option>
-                <option value="">test</option></select>
+              <select class="form-control input-sm" id="select_list">
+	{% for name in all_cluster_name %}
+                <option value="">{{name.cluster_name}}</option>
+	{% end %}
+              </select>
             </div>
           </div>
           <label class="col-sm-1 control-label text-right" for="inputSuccess">节点路劲:</label>
