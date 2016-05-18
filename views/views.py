@@ -49,50 +49,53 @@ class Get_Base_Node(BaseHandler):
 	self.write(get_base())
 
 
-class Key_Json(BaseHandler):
-
-    def get_node(self,node_key):
-	zk=zookeeper.init(self.zk_Server())
-        if node_key == "/":
-            for node in zookeeper.get_children(zk,node_key):
-                 key =  "/" + node
-                 if (zookeeper.get(zk,key)[1])['numChildren'] > 0:
-                      self.get_node(key)
-        else:
-            data=[]
-            for node in zookeeper.get_children(zk,node_key):
-                 key =  node_key + "/" + node
-                 if (zookeeper.get(zk,key)[1])['numChildren'] > 0:
-                      data.append(self.get_node(key))
-                 else:
-                      data.append({'name': node})
-    
-        node = {'name':node_key}
-        node['children'] = data
-	zookeeper.close(zk)
-    
-        return node
 
 
-
-
-
-class Node_Path(Key_Json):
+class Node_Path(BaseHandler):
     def post(self):
 	request_dict = self.request.arguments
 	node_key = (request_dict['node_path'])[0]
 	cluster_name  = (request_dict['cluster_name'])[0]
 	print "#####-----------------",self.zk_connect(cluster_name)
+	print node_key
+
+        zk=zookeeper.init(self.zk_connect(cluster_name))
+
+
+        def get_node(node_key):
+            data=[]
+            if node_key == "/":
+                for node in zookeeper.get_children(zk,node_key):
+                     key =  "/" + node
+                     if (zookeeper.get(zk,key)[1])['numChildren'] > 0:
+                          data.append(get_node(key))
+                          #get_node(key)
+                     else:
+                          data.append({'name': node})
+            else:
+                for node in zookeeper.get_children(zk,node_key):
+                     key =  node_key + "/" + node
+                     if (zookeeper.get(zk,key)[1])['numChildren'] > 0:
+                          data.append(get_node(key))
+                     else:
+                          data.append({'name': node})
+        
+        
+            node_dict = {'name':node_key}
+            if not len(data):
+                data=['None']
+            node_dict['children'] = data
+            return node_dict
+
+
 	if  node_key.startswith('/'):
-	    try:
-                data = self.get_node(node_key)
-                obj = [data]
-                data = json.dumps(obj)
-                self.write(data)
-	    except:
-                self.write("node不存在")
+            data = get_node(node_key)
+            obj = [data]
+            data = json.dumps(obj)
+            self.write(data)
 	else:
             self.write("节点必须以/开头")
+        zookeeper.close(zk)
 class Get_Node_Value(BaseHandler):
     def post(self):
 	request_dict = self.request.arguments

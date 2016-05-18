@@ -51,6 +51,7 @@ $(document).ready(function() {
 		cluster_name: $name,
             },
             function(data) {
+		alert(data)
                 $.fn.zTree.init($("#treeDemo"), setting, JSON.parse(data));
 
             });
