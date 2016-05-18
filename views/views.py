@@ -23,6 +23,9 @@ class BaseHandler(tornado.web.RequestHandler):
 
     def GetNowTime(self):
     	return time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(time.time()))
+    def zk_connect(self,cluster_name):
+	zk_host = (ZdZookeeper.select().where(ZdZookeeper.cluster_name == cluster_name).get()).hosts
+	return zk_host
 
 class Base_Handler(BaseHandler):
     '''
@@ -78,6 +81,8 @@ class Node_Path(Key_Json):
     def post(self):
 	request_dict = self.request.arguments
 	node_key = (request_dict['node_path'])[0]
+	cluster_name  = (request_dict['cluster_name'])[0]
+	print "#####-----------------",self.zk_connect(cluster_name)
 	if  node_key.startswith('/'):
 	    try:
                 data = self.get_node(node_key)

@@ -48,6 +48,7 @@ $(document).ready(function() {
         } else {
             $.post("/node_path/", {
                 node_path: $("#node_path").val(),
+		cluster_name: $name,
             },
             function(data) {
                 $.fn.zTree.init($("#treeDemo"), setting, JSON.parse(data));
