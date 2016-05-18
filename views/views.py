@@ -108,7 +108,8 @@ class Mod_Node_Value(BaseHandler):
 	request_dict = self.request.arguments
 	node_value = (request_dict['node_value'])[0]
 	node_name = (request_dict['node_name'])[0]
-	zk=zookeeper.init(self.zk_Server())
+        cluster_name  = (request_dict['cluster_name'])[0]
+        zk=zookeeper.init(self.zk_connect(cluster_name))
 	zookeeper.set(zk,node_name,node_value)
 	zookeeper.close(zk)
 	self.write("修改成功")
@@ -116,7 +117,8 @@ class Post_Delete(BaseHandler):
     def post(self):
 	request_dict = self.request.arguments
 	node_key = (request_dict['node_key'])[0]
-	zk=zookeeper.init(self.zk_Server())
+        cluster_name  = (request_dict['cluster_name'])[0]
+        zk=zookeeper.init(self.zk_connect(cluster_name))
 	try:
 	   zookeeper.delete(zk,node_key)
 	   msg = '删除成功'
@@ -128,11 +130,10 @@ class Post_Delete(BaseHandler):
 class Add_Node(BaseHandler):
     def post(self):
 	request_dict = self.request.arguments
-	print request_dict
-	zk=zookeeper.init(self.zk_Server())
+        cluster_name  = (request_dict['cluster_name'])[0]
+        zk=zookeeper.init(self.zk_connect(cluster_name))
 	new_node = (request_dict['New_post_node'])[0]
 	new_value = (request_dict['new_node_value'])[0]
-	print new_node
 	if zookeeper.exists(zk,new_node):
 	    zookeeper.close(zk)
 	    self.write("此节点存在")

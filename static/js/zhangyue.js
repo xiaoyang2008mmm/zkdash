@@ -62,12 +62,13 @@ $(document).ready(function() {
 
         var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
         var nodes = treeObj.getSelectedNodes();
+	var $name = $("#select_list option:selected").text();
         treeNode = nodes[0];
         if (nodes.length == 0) {
             alert("请先选择一个节点");
             return;
         } else {
-            var result = post_func(get_node_tree());
+            var result = post_func($name,get_node_tree());
             if (String(result) != "false") {
                 for (var i = 0,
                 l = nodes.length; i < l; i++) {
@@ -79,11 +80,12 @@ $(document).ready(function() {
     });
     //////////////////////
     //需要获取函数里的函数的返回值,待改动
-    function post_func(node) {
+    function post_func($name,node) {
         var msg = "确定要删除吗?";
         if (confirm(msg) == true) {
             $.post("/post_delete/", {
                 node_key: node,
+		cluster_name: $name, 
             },
             function(data) {
                 alert(data);
@@ -175,10 +177,12 @@ $(document).ready(function() {
     $("#commit_btn").click(function() {
         var node_name = $('#node_name').attr("value");
         var node_value = $('#node_value').val();
+	var $name = $("#select_list option:selected").text();
 
         $.post("/mod_node_value/", {
             node_name: node_name,
             node_value: node_value,
+	    cluster_name: $name,
         },
         function(data) {
             alert(data);
@@ -200,6 +204,7 @@ $(document).ready(function() {
         var node_name = $('#parent_node_name').attr("value");
         var new_node_name = $('#new_node_name').val();
         var new_node_value = $('#new_node_value').val();
+	var $name = $("#select_list option:selected").text();
         if (node_name != "/") {
             var New_post_node = node_name + "/" + new_node_name;
         } else {
@@ -213,6 +218,7 @@ $(document).ready(function() {
             $.post("/add_node/", {
                 New_post_node: New_post_node,
                 new_node_value: new_node_value,
+		cluster_name: $name, 
             },
             function(data) {
                 alert(data);
