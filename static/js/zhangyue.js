@@ -414,7 +414,11 @@ $(document).ready(function() {
         var $radio = $("#table input:radio:checked").parent().parent().parent();
         var $row = parseInt($radio.index()) + 1;
         var $c_name = $("#table tr:eq(" + $row + ") td:nth-child(1)").html();
+	if ($c_name ==null ){
+	    alert("没有要删除的主机!!!!!");
+	}else{
         delete_cluster($c_name);
+	}
     });
 
     //////////////////////////////
