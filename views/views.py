@@ -56,8 +56,6 @@ class Node_Path(BaseHandler):
 	request_dict = self.request.arguments
 	node_key = (request_dict['node_path'])[0]
 	cluster_name  = (request_dict['cluster_name'])[0]
-	print "#####-----------------",self.zk_connect(cluster_name)
-	print node_key
 
         zk=zookeeper.init(self.zk_connect(cluster_name))
 
@@ -100,9 +98,9 @@ class Get_Node_Value(BaseHandler):
     def post(self):
 	request_dict = self.request.arguments
 	node_id = (request_dict['choose_node'])[0]
-	zk=zookeeper.init(self.zk_Server())
+        cluster_name  = (request_dict['cluster_name'])[0]
+        zk=zookeeper.init(self.zk_connect(cluster_name))
 	_value = (zookeeper.get(zk,node_id))[0]
-	print _value
 	zookeeper.close(zk)
 	self.write(_value)
 class Mod_Node_Value(BaseHandler):

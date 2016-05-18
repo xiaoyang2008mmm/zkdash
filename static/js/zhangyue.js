@@ -42,7 +42,6 @@ $(document).ready(function() {
     ////////////////////////
     $("#node_search").click(function() {
 	var $name = $("#select_list option:selected").text(); 
-	alert($name);
         if ($("#node_path").val() == "") {
             alert("输入首节点路劲");
         } else {
@@ -108,13 +107,14 @@ $(document).ready(function() {
             alert("请先选择一个节点");
             return;
         } else {
-
+	    var $name = $("#select_list option:selected").text(); 
             var value_data = get_node_tree();
             if (value_data == "/") {
                 alert("根节点下无数据");
             } else {
                 $.post("/get_node_value/", {
                     choose_node: value_data,
+		    cluster_name: $name,
                 },
                 function(data) {
                     if (data == "") {
