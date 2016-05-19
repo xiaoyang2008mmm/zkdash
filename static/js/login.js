@@ -9,7 +9,7 @@ $(document).ready(function() {
         },
         function(data) {
             if (data == "ok") {
-                location.href = '/';
+                location.href = '/zk_page/';
             } else {
                 alert(data);
             }
