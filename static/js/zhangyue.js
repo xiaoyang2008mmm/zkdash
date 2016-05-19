@@ -34,7 +34,7 @@ function get_parent_tree() {
 
 $(document).ready(function() {
 
-function load_node_tree(){
+    function load_node_tree() {
         var $name = $("#select_list option:selected").text();
         if ($("#node_path").val() == "") {
             alert("输入首节点路劲");
@@ -48,12 +48,11 @@ function load_node_tree(){
 
             });
         };
-}
-
+    }
 
     ////////////////////////
     $("#node_search").click(function() {
-	load_node_tree();
+        load_node_tree();
     });
     ////////////////////////
     //
@@ -61,30 +60,30 @@ function load_node_tree(){
 
         var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
         var nodes = treeObj.getSelectedNodes();
-	var $name = $("#select_list option:selected").text();
+        var $name = $("#select_list option:selected").text();
         treeNode = nodes[0];
         if (nodes.length == 0) {
             alert("请先选择一个节点");
             return;
         } else {
-            var result = post_func($name,get_node_tree());
+            var result = post_func($name, get_node_tree());
             if (String(result) != "false") {
-               // for (var i = 0,l = nodes.length; i < l; i++) {
-               //     treeObj.removeNode(nodes[i]);
-               // }
-               load_node_tree();
+                // for (var i = 0,l = nodes.length; i < l; i++) {
+                //     treeObj.removeNode(nodes[i]);
+                // }
+                load_node_tree();
             }
         }
 
     });
     //////////////////////
     //需要获取函数里的函数的返回值,待改动
-    function post_func($name,node) {
+    function post_func($name, node) {
         var msg = "确定要删除吗?";
         if (confirm(msg) == true) {
             $.post("/post_delete/", {
                 node_key: node,
-		cluster_name: $name, 
+                cluster_name: $name,
             },
             function(data) {
                 alert(data);
@@ -103,7 +102,7 @@ function load_node_tree(){
 
         var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
         var nodes = treeObj.getSelectedNodes();
-	var name = $("#select_list option:selected").text(); 
+        var name = $("#select_list option:selected").text();
         treeNode = nodes[0];
         if (nodes.length == 0) {
             alert("请先选择一个节点");
@@ -115,7 +114,7 @@ function load_node_tree(){
             } else {
                 $.post("/get_node_value/", {
                     choose_node: value_data,
-		    cluster_name: name,
+                    cluster_name: name,
                 },
                 function(data) {
                     if (data == "") {
@@ -154,13 +153,13 @@ function load_node_tree(){
     $("#value_change").click(function() {
 
         var value_data = get_node_tree();
-	var $name = $("#select_list option:selected").text(); 
+        var $name = $("#select_list option:selected").text();
         if (value_data == "/") {
             alert("根节点不能修改");
         } else {
 
             $.post("/get_node_value/", {
-		cluster_name: $name,
+                cluster_name: $name,
                 choose_node: value_data,
             },
             function(data) {
@@ -176,17 +175,17 @@ function load_node_tree(){
     $("#commit_btn").click(function() {
         var node_name = $('#node_name').attr("value");
         var node_value = $('#node_value').val();
-	var $name = $("#select_list option:selected").text();
+        var $name = $("#select_list option:selected").text();
 
         $.post("/mod_node_value/", {
             node_name: node_name,
             node_value: node_value,
-	    cluster_name: $name,
+            cluster_name: $name,
         },
         function(data) {
             alert(data);
             $('#myModal').modal('hide');
-	    load_node_tree();
+            load_node_tree();
         });
 
     });
@@ -204,7 +203,7 @@ function load_node_tree(){
         var node_name = $('#parent_node_name').attr("value");
         var new_node_name = $('#new_node_name').val();
         var new_node_value = $('#new_node_value').val();
-	var $name = $("#select_list option:selected").text();
+        var $name = $("#select_list option:selected").text();
         if (node_name != "/") {
             var New_post_node = node_name + "/" + new_node_name;
         } else {
@@ -217,17 +216,11 @@ function load_node_tree(){
             $.post("/add_node/", {
                 New_post_node: New_post_node,
                 new_node_value: new_node_value,
-		cluster_name: $name, 
+                cluster_name: $name,
             },
             function(data) {
                 alert(data);
                 $('#myModal_add').modal('hide');
-                //var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
-                //var nodes = treeObj.getSelectedNodes();
-                //var newNode = {
-                //    name: new_node_name
-                //};
-                //newNode = treeObj.addNodes(nodes[0], newNode);
                 load_node_tree();
 
             });
@@ -252,9 +245,6 @@ function load_node_tree(){
                 var result = post_batch_delete(value_data);
 
                 if (String(result) != "false") {
-                    //for (var i = 0,l = sNodes.length; i < l; i++) {
-                    //    treeObj.removeNode(sNodes[i]);
-                    //}
                     load_node_tree();
                 }
 
@@ -274,7 +264,7 @@ function load_node_tree(){
         if (confirm(msg) == true) {
             var res_msg = $.post("/batch_delete/", {
                 node_key: node,
-		cluster_name: $name, 
+                cluster_name: $name,
             },
             function(data) {
                 alert(data);
@@ -320,9 +310,9 @@ function load_node_tree(){
             alert("请先选择一个节点");
             return;
         } else {
-        var curr_node = get_node_tree();
-        MAKE_SNAPSHOST(curr_node);
-	}
+            var curr_node = get_node_tree();
+            MAKE_SNAPSHOST(curr_node);
+        }
     });
     //////////////////////
     function MAKE_SNAPSHOST(node) {
@@ -331,7 +321,7 @@ function load_node_tree(){
         if (confirm(msg) == true) {
             var res_msg = $.post("/m_snapshot/", {
                 node_tree: node,
-		cluster_name: $name,
+                cluster_name: $name,
             },
             function(data) {
                 alert(data);
@@ -361,7 +351,7 @@ function load_node_tree(){
             var $name = $("#select_list option:selected").text();
             var res_msg = $.post("/batch_m_snapshot/", {
                 node_tree: node,
-		cluster_name: $name,
+                cluster_name: $name,
             },
             function(data) {
                 alert(data);
@@ -410,11 +400,11 @@ function load_node_tree(){
         var $radio = $("#table input:radio:checked").parent().parent().parent();
         var $row = parseInt($radio.index()) + 1;
         var $c_name = $("#table tr:eq(" + $row + ") td:nth-child(1)").html();
-	if ($c_name ==null ){
-	    alert("没有要删除的主机!!!!!");
-	}else{
-        delete_cluster($c_name);
-	}
+        if ($c_name == null) {
+            alert("没有要删除的主机!!!!!");
+        } else {
+            delete_cluster($c_name);
+        }
     });
 
     //////////////////////////////
