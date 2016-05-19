@@ -239,8 +239,20 @@ $(document).ready(function() {
             alert("请先选择一个节点");
             return;
         } else {
+	 $('#firstkey').empty();
+         $('#secondkey').empty();
+         $('#thirdkey').empty();
+         $('#fourthkey').empty();
+         $('#fifthkey').empty();
+         $('#firstvalue').empty();
+         $('#secondvalue').empty();
+         $('#thirdvalue').empty();
+         $('#fourthvalue').empty();
+         $('#fifthvalue').empty();
+        var $name = $("#select_list option:selected").text();
         $('#myModal_batch').modal('show');
         $('#add_node_name').attr("value", get_node_tree());
+        $('#add_cluster_name').attr("value", $name);
 	}
     });
     ////////////////////////////////////////////
@@ -448,10 +460,11 @@ $(document).ready(function() {
 	var $value5 = $('#fifthvalue').val();
 
 var node_data = {
-    'name' : '琼台博客',
-    'url'  : 'www.qttc.net',
-    'desc' : '个人web技术博客',
-    'author' : 'lee'
+    node1: [$key1 , $value1],
+    node2: [$key2 , $value2],
+    node3: [$key3 , $value3],
+    node4: [$key4 , $value4],
+    node5: [$key5 , $value5],
 };
  
 obj_json = $.toJSON(node_data);
