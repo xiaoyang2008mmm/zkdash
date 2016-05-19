@@ -1,5 +1,6 @@
 $(document).ready(function() {
-    $("#login_button").click(function() {
+    function chesum_login() {
+
         var $login_username = $("#login_username").val();
         var $login_password = $("#login_password").val();
         $.post("/login/", {
@@ -7,12 +8,23 @@ $(document).ready(function() {
             login_password: $login_password,
         },
         function(data) {
-            if (data =="ok"){
-		    location.href = '/';
-		}else{
-		    alert(data);
-		}
+            if (data == "ok") {
+                location.href = '/';
+            } else {
+                alert(data);
+            }
         });
+
+    }
+    $("#login_button").click(function() {
+        chesum_login();
+    });
+
+    $('#login_password').bind('keypress',
+    function(event) {
+        if (event.keyCode == "13") {
+            chesum_login();
+        }
     });
 
 })
