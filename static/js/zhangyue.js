@@ -135,8 +135,8 @@ $(document).ready(function() {
         var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
         var nodes = treeObj.getSelectedNodes();
         treeNode = nodes[0];
-        var value_data = treeNode.name;
 
+        var value_data = treeNode.name;
         if (value_data.indexOf("/") != 0) {
 
             var sNodes = treeObj.getSelectedNodes();
@@ -231,8 +231,17 @@ $(document).ready(function() {
     });
     ////////////////////////////////////////////
     $("#batch_xiugai").click(function() {
+        var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+        var nodes = treeObj.getSelectedNodes();
+        treeNode = nodes[0];
+
+        if (nodes.length == 0) {
+            alert("请先选择一个节点");
+            return;
+        } else {
         $('#myModal_batch').modal('show');
         $('#add_node_name').attr("value", get_node_tree());
+	}
     });
     ////////////////////////////////////////////
     $("#batch_delete").click(function() {
@@ -425,5 +434,29 @@ $(document).ready(function() {
             return false;
         }
     }
+    //////////////////////
+    $("#batch_value_post").click(function() {
+	var $key1 = $('#firstkey').val();
+	var $key2 = $('#secondkey').val();
+	var $key3 = $('#thirdkey').val();
+	var $key4 = $('#fourthkey').val();
+	var $key5 = $('#fifthkey').val();
+	var $value1 = $('#firstvalue').val();
+	var $value2 = $('#secondvalue').val();
+	var $value3 = $('#thirdvalue').val();
+	var $value4 = $('#fourthvalue').val();
+	var $value5 = $('#fifthvalue').val();
+
+var node_data = {
+    'name' : '琼台博客',
+    'url'  : 'www.qttc.net',
+    'desc' : '个人web技术博客',
+    'author' : 'lee'
+};
+ 
+obj_json = $.toJSON(node_data);
+document.write(obj_json);
+
+    });
 
 });
