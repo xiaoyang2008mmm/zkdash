@@ -299,3 +299,10 @@ class Cluster_Operation(BaseHandler):
 	    query = ZdZookeeper.get(ZdZookeeper.cluster_name == c_name ) 
 	    query.delete_instance()
 	    self.write("删除成功!!!!!")
+class Batch_Node_Json(BaseHandler):
+    """批量给ZK增加节点数据"""
+    def post(self):
+        request_dict = self.request.arguments
+        node_json = (eval(request_dict['node_json'][0])).values()
+	print node_json
+	self.write("111")

@@ -448,28 +448,53 @@ $(document).ready(function() {
     }
     //////////////////////
     $("#batch_value_post").click(function() {
-	var $key1 = $('#firstkey').val();
-	var $key2 = $('#secondkey').val();
-	var $key3 = $('#thirdkey').val();
-	var $key4 = $('#fourthkey').val();
-	var $key5 = $('#fifthkey').val();
-	var $value1 = $('#firstvalue').val();
-	var $value2 = $('#secondvalue').val();
-	var $value3 = $('#thirdvalue').val();
-	var $value4 = $('#fourthvalue').val();
-	var $value5 = $('#fifthvalue').val();
+        var $key1 = $('#firstkey').val();
+        var $key2 = $('#secondkey').val();
+        var $key3 = $('#thirdkey').val();
+        var $key4 = $('#fourthkey').val();
+        var $key5 = $('#fifthkey').val();
+        var $value1 = $('#firstvalue').val();
+        var $value2 = $('#secondvalue').val();
+        var $value3 = $('#thirdvalue').val();
+        var $value4 = $('#fourthvalue').val();
+        var $value5 = $('#fifthvalue').val();
+    
+        node_data = new Object();
+        if ($key1 != "") {
+            node_data.node1 = [$key1, $value1]
+        }
+        if ($key2 != "") {
+            node_data.node2 = [$key2, $value2]
+    
+        }
+        if ($key3 != "") {
+            node_data.node3 = [$key3, $value3]
+    
+        }
+        if ($key4 != "") {
+            node_data.node4 = [$key4, $value4]
+    
+        }
+        if ($key5 != "") {
+            node_data.node5 = [$key5, $value5]
+    
+        }
+    
+        obj_json = $.toJSON(node_data);
+        //document.write(obj_json);
+        if ($(node_data).length == 0){
+            alert("请填写要增加的节点!!!!!")
+	}else{
+            $.post("/batch_node_json/", {
+                node_json: obj_json,
+            },                                                                                                                                        
+            function(data) {   
+		alert(data);
+                                                                                                                                                      
+            });	   
 
-var node_data = {
-    node1: [$key1 , $value1],
-    node2: [$key2 , $value2],
-    node3: [$key3 , $value3],
-    node4: [$key4 , $value4],
-    node5: [$key5 , $value5],
-};
- 
-obj_json = $.toJSON(node_data);
-document.write(obj_json);
-
+	}
+    
     });
-
+    
 });
