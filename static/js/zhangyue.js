@@ -34,23 +34,26 @@ function get_parent_tree() {
 
 $(document).ready(function() {
 
-
-    ////////////////////////
-    $("#node_search").click(function() {
-	var $name = $("#select_list option:selected").text(); 
+function load_node_tree(){
+        var $name = $("#select_list option:selected").text();
         if ($("#node_path").val() == "") {
             alert("输入首节点路劲");
         } else {
             $.post("/node_path/", {
                 node_path: $("#node_path").val(),
-		cluster_name: $name,
+                cluster_name: $name,
             },
             function(data) {
-		alert(data)
                 $.fn.zTree.init($("#treeDemo"), setting, JSON.parse(data));
 
             });
         };
+}
+
+
+    ////////////////////////
+    $("#node_search").click(function() {
+	load_node_tree();
     });
     ////////////////////////
     //
@@ -66,10 +69,10 @@ $(document).ready(function() {
         } else {
             var result = post_func($name,get_node_tree());
             if (String(result) != "false") {
-                for (var i = 0,
-                l = nodes.length; i < l; i++) {
-                    treeObj.removeNode(nodes[i]);
-                }
+               // for (var i = 0,l = nodes.length; i < l; i++) {
+               //     treeObj.removeNode(nodes[i]);
+               // }
+               load_node_tree();
             }
         }
 
@@ -101,7 +104,6 @@ $(document).ready(function() {
         var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
         var nodes = treeObj.getSelectedNodes();
 	var name = $("#select_list option:selected").text(); 
-	alert(name)
         treeNode = nodes[0];
         if (nodes.length == 0) {
             alert("请先选择一个节点");
@@ -139,8 +141,6 @@ $(document).ready(function() {
             var sNodes = treeObj.getSelectedNodes();
             if (sNodes.length > 0) {
                 var node = sNodes[0].getParentNode();
-                console.log(node.name);
-                console.log(value_data);
                 if (node.name == "/") {
                     var value_data = '/' + value_data;
                 } else {
@@ -177,7 +177,6 @@ $(document).ready(function() {
         var node_name = $('#node_name').attr("value");
         var node_value = $('#node_value').val();
 	var $name = $("#select_list option:selected").text();
-	alert($name)
 
         $.post("/mod_node_value/", {
             node_name: node_name,
@@ -187,6 +186,7 @@ $(document).ready(function() {
         function(data) {
             alert(data);
             $('#myModal').modal('hide');
+	    load_node_tree();
         });
 
     });
@@ -211,7 +211,6 @@ $(document).ready(function() {
             var New_post_node = "/" + new_node_name;
 
         }
-        alert(New_post_node + new_node_value);
         if (new_node_name == "") {
             alert("新节点名必须增加");
         } else {
@@ -223,12 +222,13 @@ $(document).ready(function() {
             function(data) {
                 alert(data);
                 $('#myModal_add').modal('hide');
-                var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
-                var nodes = treeObj.getSelectedNodes();
-                var newNode = {
-                    name: new_node_name
-                };
-                newNode = treeObj.addNodes(nodes[0], newNode);
+                //var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+                //var nodes = treeObj.getSelectedNodes();
+                //var newNode = {
+                //    name: new_node_name
+                //};
+                //newNode = treeObj.addNodes(nodes[0], newNode);
+                load_node_tree();
 
             });
         }
@@ -252,10 +252,10 @@ $(document).ready(function() {
                 var result = post_batch_delete(value_data);
 
                 if (String(result) != "false") {
-                    for (var i = 0,
-                    l = sNodes.length; i < l; i++) {
-                        treeObj.removeNode(sNodes[i]);
-                    }
+                    //for (var i = 0,l = sNodes.length; i < l; i++) {
+                    //    treeObj.removeNode(sNodes[i]);
+                    //}
+                    load_node_tree();
                 }
 
             } else {
