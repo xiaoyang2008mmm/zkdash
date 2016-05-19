@@ -485,11 +485,16 @@ $(document).ready(function() {
         if ($(node_data).length == 0){
             alert("请填写要增加的节点!!!!!")
 	}else{
+            var name = $("#select_list option:selected").text();
             $.post("/batch_node_json/", {
                 node_json: obj_json,
+		cluster_name: name,
+		current_node:get_node_tree(),
             },                                                                                                                                        
             function(data) {   
 		alert(data);
+                $('#myModal_batch').modal('hide');
+                load_node_tree();
                                                                                                                                                       
             });	   
 

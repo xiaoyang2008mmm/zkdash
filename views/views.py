@@ -264,7 +264,7 @@ class Batch_Make_Snapshot(BaseHandler):
                      else:
             	          value = (zookeeper.get(zk,key))[0]
     		          create_time = time.time()
-    		          table = ZdSnapshot(cluster_name="test",path=key , data=value ,create_time=self.GetNowTime())
+    		          table = ZdSnapshot(cluster_name= cluster_name ,path=key , data=value ,create_time=self.GetNowTime())
     		          table.save()
             else:
                 for node in zookeeper.get_children(zk,node_key):
@@ -274,7 +274,7 @@ class Batch_Make_Snapshot(BaseHandler):
                      else:
             	          value = (zookeeper.get(zk,key))[0]
     		          create_time = time.time()
-    		          table = ZdSnapshot(cluster_name="test",path=key , data=value ,create_time=self.GetNowTime())
+    		          table = ZdSnapshot(cluster_name= cluster_name,path=key , data=value ,create_time=self.GetNowTime())
     		          table.save()
 	get_node(node_key)
 	self.write("生成快照成功!!!!!")
@@ -303,6 +303,16 @@ class Batch_Node_Json(BaseHandler):
     """批量给ZK增加节点数据"""
     def post(self):
         request_dict = self.request.arguments
-        node_json = (eval(request_dict['node_json'][0])).values()
-	print node_json
-	self.write("111")
+        node_json_list = (eval(request_dict['node_json'][0])).values()
+	cluster_name = (request_dict['cluster_name'])[0]
+	current_node = (request_dict['current_node'])[0]
+	if current_node == "/" :
+	    current_node = ""
+        zk=zookeeper.init(self.zk_connect(cluster_name))
+	for item in node_json_list:
+	    key = current_node + "/" + item[0]
+	    value = item[1]
+	    if not zookeeper.exists(zk, key):
+	        zookeeper.create(zk, key , value , [{"perms":0x1f,"scheme":"world","id":"anyone"}],0)
+	self.write("写入成功")
+        zookeeper.close(zk)
