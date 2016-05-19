@@ -7,6 +7,8 @@ var setting = {
 function onClick(event, treeId, treeNode, clickFlag) {
     $('#zk_tree').attr("value", get_parent_tree());
     $('#zk_name').attr("value", treeNode.name);
+    var $name = $("#select_list option:selected").text();
+    $('#default_cluster_name').attr("value", $name);
 }
 
 function get_parent_tree() {
