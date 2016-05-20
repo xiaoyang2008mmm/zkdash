@@ -501,5 +501,27 @@ $(document).ready(function() {
 	}
     
     });
+
+    //////////////////////
+    $('#history_snapshot').on('click', 'button[id*=rollback]',
+    function() {
+        var $this = $(this);
+        var $history_id = $this.closest('tbody').find('tr#history_id');
+        var index = ($history_id.index($this.closest('tr#history_id')[0])) + 1;
+        var $id = $("#history_snapshot tr:eq(" + index + ") td:nth-child(1)").html();
+        alert($id);
+    })
+    //////////////////////
+    $('#snapshot_delete').on('click', 'button[id*=snapshot_delete]',
+    function() {
+        var $this = $(this);
+        var $history_id = $this.closest('tbody').find('tr#history_id');
+        var index = ($history_id.index($this.closest('tr#history_id')[0])) + 1;
+        var $id = $("#history_snapshot tr:eq(" + index + ") td:nth-child(1)").html();
+        alert($id);
+    })
+    //////////////////////
+
+
     
 });

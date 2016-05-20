@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block body %}
 
-        <table class="table table-striped table-bordered table-condensed ">
+        <table class="table table-striped table-bordered table-condensed " id="history_snapshot">
           <thead>
             <tr>
               <th>序号</th>
@@ -11,9 +11,9 @@
               <th>快照时间</th>
               <th>操作</th></tr>
           </thead>
-          <tbody>
+          <tbody >
 	{% for key in history_snapshot %}  
-            <tr>
+            <tr id="history_id">
               <td>{{key[0]}}</td>
               <td>{{key[1]}}</td>
               <td>{{key[2]}}</td>
@@ -21,8 +21,8 @@
               <td>{{key[4]}}</td>
               <td>
                 <div class="btn-group">
-                  <button type="button" class="btn btn-info">回滚</button>
-                  <button type="button" class="btn btn-danger">删除</button></div>
+                  <button type="button" class="btn btn-info" id="rollback">回滚</button>
+                  <button type="button" class="btn btn-danger" id="snapshot_delete">删除</button></div>
               </td>
             </tr>
 	{% end %}  
