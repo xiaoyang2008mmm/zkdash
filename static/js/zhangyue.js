@@ -46,7 +46,12 @@ $(document).ready(function() {
                 cluster_name: $name,
             },
             function(data) {
+		if (data.length < 10 ){
+		    alert(data);
+		}else{
                 $.fn.zTree.init($("#treeDemo"), setting, JSON.parse(data));
+		}
+
 
             });
         };

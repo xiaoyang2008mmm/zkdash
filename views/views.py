@@ -81,10 +81,13 @@ class Node_Path(BaseHandler):
 
 
 	if  node_key.startswith('/'):
-            data = get_node(node_key)
-            obj = [data]
-            data = json.dumps(obj)
-            self.write(data)
+	    if zookeeper.exists(zk,node_key):
+                data = get_node(node_key)
+                obj = [data]
+                data = json.dumps(obj)
+                self.write(data)
+	    else:
+                self.write("节点不存在!!!")
 	else:
             self.write("节点必须以/开头")
         zookeeper.close(zk)
