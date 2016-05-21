@@ -1,0 +1,37 @@
+<div class="modal fade " id="modfiy_host_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">ZK集群修改</h4></div>
+      <div class="modal-body">
+        <form class="form-horizontal" role="form">
+          <div class="form-group has-success">
+            <label class="col-sm-2 control-label" >集群ID</label>
+            <div class="col-sm-8">
+		<input class="form-control " id="new_cluster_id"  type="text" value="" disabled></div>
+          </div>
+          <div class="form-group has-success">
+            <label class="col-sm-2 control-label" >集群名称</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="new_cluster_name" value=""></div>
+          </div>
+          <div class="form-group has-success">
+            <label class="col-sm-2 control-label" >集群配置</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="new_cluster_conf" value=""></div>
+          </div>
+          <div class="form-group has-success">
+            <label class="col-sm-2 control-label" >集群业务</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="new_cluster_lable" value=""></div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" id="modfiy_zk_cluster">提交更改</button></div>
+    </div>
+ </div>
+</div>
+

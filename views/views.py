@@ -37,7 +37,15 @@ class Base_Handler(BaseHandler):
 class Config_Mangager(BaseHandler):
     def get(self):
 	query_result = ZdZookeeper.select()
-	_dict = {"all_cluster_name" : query_result}
+	current_user = self.get_current_user()
+
+	all_cluster_name = []
+	for name in query_result:
+	    if name.users:
+		if current_user in (name.users).encode("utf-8"):
+		    all_cluster_name.append(name.cluster_name)
+	_dict = {"all_cluster_name" : all_cluster_name }
+
         self.render("config_mangager.html", **_dict)
 
 
@@ -233,7 +241,6 @@ class Check_Snapshot(BaseHandler):
 	    data.append(i.create_time)
 	    all.append(data)
 	    data = []
-	print all
 	_dict = {"history_snapshot" : all}
 	self.render("see_snapshot.html", **_dict)
 
@@ -297,11 +304,36 @@ class Cluster_Operation(BaseHandler):
 	    table = ZdZookeeper(cluster_name=cluster_name ,hosts=cluster_conf , business=cluster_lable)
 	    table.save()
 	    self.write("保存成功!!!!!")
+
 	if operation == "cluster_delete":
 	    c_name = (request_dict['cluster_name'])[0]
 	    query = ZdZookeeper.get(ZdZookeeper.cluster_name == c_name ) 
 	    query.delete_instance()
 	    self.write("删除成功!!!!!")
+
+	if operation == "cluster_modefi":
+	    c_name = (request_dict['cluster_name'])[0]
+	    query = ZdZookeeper.select().where(ZdZookeeper.cluster_name == c_name)
+	    result_dict = {}
+	    for item  in query:
+		result_dict['id'] = item.id
+		result_dict['hosts'] = item.hosts
+		result_dict['business'] = item.business
+		result_dict['cluster_name'] = item.cluster_name
+	    self.write(result_dict)
+	if operation == "cluster_update":
+	    new_cluster_id = (request_dict['new_cluster_id'])[0]
+	    new_cluster_name = (request_dict['new_cluster_name'])[0]
+	    new_cluster_conf = (request_dict['new_cluster_conf'])[0]
+	    new_cluster_lable = (request_dict['new_cluster_lable'])[0]
+
+	    data = ZdZookeeper.select().where(ZdZookeeper.id == new_cluster_id).get() 
+	    data.cluster_name = new_cluster_name
+	    data.hosts = new_cluster_conf
+	    data.business = new_cluster_lable
+	    data.save()
+	    self.write("修改成功")
+
 class Batch_Node_Json(BaseHandler):
     """批量给ZK增加节点数据"""
     def post(self):

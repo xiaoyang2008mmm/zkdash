@@ -42,6 +42,7 @@ class ZdZookeeper(BaseModel):
     cluster_name = CharField(max_length=128,null=True)
     hosts = CharField(max_length=128,null=True)
     business = CharField(max_length=255,null=True)
+    users = CharField(max_length=255,null=True)
 
     class Meta(object):
 

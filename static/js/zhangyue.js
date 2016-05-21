@@ -517,8 +517,53 @@ $(document).ready(function() {
         var $id = $("#history_snapshot tr:eq(" + index + ") td:nth-child(1)").html();
         alert($id);
     }
-    //////////////////////
 
+
+
+    //////////////////////
+    $("#modfi_host").click(function() {
+        var $radio = $("#table input:radio:checked").parent().parent().parent();
+        var $row = parseInt($radio.index()) + 1;
+        var $c_name = $("#table tr:eq(" + $row + ") td:nth-child(1)").html();
+
+            $.post("/cluster_operation/", {
+                cluster_name: $c_name,
+                operation: "cluster_modefi",
+            },
+            function(data) {
+		$('#new_cluster_id').attr("value", data.id);
+		$('#new_cluster_name').attr("value", data.cluster_name);
+		$('#new_cluster_conf').attr("value", data.hosts);
+		$('#new_cluster_lable').attr("value", data.business);
+		$('#modfiy_host_modal').modal('show');
+                console.log(data.hosts);
+            });
+
+    });
+    //////////////////////
+        $("#modfiy_zk_cluster").click(function() {
+        var new_cluster_id = $('#new_cluster_id').val();
+        var new_cluster_name = $('#new_cluster_name').val();
+        var new_cluster_conf = $('#new_cluster_conf').val();
+        var new_cluster_lable = $('#new_cluster_lable').val();
+
+        if (new_cluster_name == "" || new_cluster_conf == "") {
+            alert("集群名称或者配置不能为空");
+        } else {
+            $.post("/cluster_operation/", {
+		new_cluster_id:	    new_cluster_id,
+		new_cluster_name:   new_cluster_name,
+		new_cluster_conf:   new_cluster_conf,
+		new_cluster_lable:  new_cluster_lable,
+                operation: "cluster_update",
+            },
+            function(data) {
+                alert(data);
+            });
+            location.href = '/zk_page/';
+        };
+
+    });
 
     
 });

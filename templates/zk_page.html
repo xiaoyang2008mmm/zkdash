@@ -3,7 +3,7 @@
 
 <div class="btn-toolbar" role="toolbar">
   <div class="btn-group">
-    <button type="button" class="btn btn-primary">
+    <button type="button" class="btn btn-primary" id="modfi_host">
       <span class="glyphicon glyphicon-pencil"></span>修改</button>
     <button type="button" class="btn btn-success" id="add_host">
       <span class="glyphicon glyphicon-plus"></span>新增</button>
@@ -19,6 +19,7 @@
       <th>集群名称</th>
       <th>集群配置</th>
       <th>集群业务</th>
+      <th>用户</th>
       <th>操作</th></tr>
   </thead>
   <tbody>
@@ -27,6 +28,7 @@
       <td>{{host.cluster_name}}</td>
       <td>{{host.hosts}}</td>
       <td>{{host.business}}</td>
+      <td>{{host.users}}</td>
       <td>
         <label class="checkbox-inline">
 	  <input type="radio" name="aa"  value="" checked> </label>
@@ -38,6 +40,7 @@
 
 
 {% include hosts/add_host.html %}
+{% include hosts/modfiy_host.html  %}
 
 
 {%end%}
