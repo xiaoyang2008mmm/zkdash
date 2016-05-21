@@ -351,3 +351,12 @@ class Batch_Node_Json(BaseHandler):
 	        zookeeper.create(zk, key , value , [{"perms":0x1f,"scheme":"world","id":"anyone"}],0)
 	self.write("写入成功")
         zookeeper.close(zk)
+class Privileges(BaseHandler):
+    '''
+    返回权限设置
+    '''
+    def get(self):
+	self.render("privileges.html")
+
+
+
