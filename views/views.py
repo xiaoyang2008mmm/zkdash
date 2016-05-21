@@ -13,6 +13,8 @@ class BaseHandler(tornado.web.RequestHandler):
 	    self.redirect(self.get_login_url())
 	
     @property
+    def db(self):
+       return self.application.db
     def get_current_user(self):
        return self.get_secure_cookie("user")
 
