@@ -370,4 +370,6 @@ class Select_User_List(BaseHandler):
         request_dict = self.request.arguments
 	cluster_name = (request_dict['condition'])[0]
 	Users = (ZdZookeeper.select().where(ZdZookeeper.cluster_name == cluster_name).get()).users
+	if Users is None :
+	    Users=","
 	self.write(Users)

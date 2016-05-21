@@ -572,8 +572,6 @@ $(document).ready(function() {
             condition: $condition,
         },
         function(data) {
-		alert(data);
-
             for (var i = 0; i < (data.split(",")).length; i++) {
                 $("#user_list").append("<option>" + (data.split(","))[i] + "</option>");
             }
