@@ -5,7 +5,7 @@ from lib.email_auth import Mail
 from lib.parserconf import *
 import urlparse 
 from urllib import urlencode
-import functools
+import string 
 from  modle.syncdb import *
 class BaseHandler(tornado.web.RequestHandler):
     def prepare(self):
@@ -373,3 +373,39 @@ class Select_User_List(BaseHandler):
 	if Users is None :
 	    Users=","
 	self.write(Users)
+
+
+
+class Add_User(BaseHandler):
+    '''
+    把用户添加到ZK集群列表中去
+    '''
+    def post(self):
+        request_dict = self.request.arguments
+	new_user = (request_dict['new_user'])[0]
+	zk_name = (request_dict['zk_name'])[0]
+	data = ZdZookeeper.select().where(ZdZookeeper.cluster_name == zk_name).get()
+	if  data.users is None:
+	    data.users =  new_user
+	else:
+	    data.users = (data.users).encode("utf-8") + "," + new_user
+	data.save()
+	self.write("ok")
+class Delete_User(BaseHandler):
+    '''
+    把用户添加到ZK集群列表中去
+    '''
+    def post(self):
+        request_dict = self.request.arguments
+	user = "," + (request_dict['user'])[0]
+	zk_name = (request_dict['zk_name'])[0]
+	data = ZdZookeeper.select().where(ZdZookeeper.cluster_name == zk_name).get()
+	users = (data.users).encode("utf-8")
+	if user in users:
+	    data.users = string.replace(users, user, "")
+	else:
+	    user = (request_dict['user'])[0]
+	    data.users = string.replace(users, user, "")
+	    
+	data.save()
+	self.write("删除成功!!!!")

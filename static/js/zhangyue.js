@@ -578,6 +578,44 @@ $(document).ready(function() {
 
         });
     });
+    //////////////////////
+    $("#userad_add").click(function() {
+	var $new_user = $("#user_text").val();
+        var $zk_name = $("#select_condition option:selected").text();
+        if ($new_user == "") {
+            alert("用户必须增加!!!!!");
+        } else {
+            $.post("/add_user/", {
+		new_user: $.trim($new_user),
+		zk_name:  $zk_name,
+            },
+            function(data) {
+                alert(data);
 
+            });
+		location.href = "/zk_page/";
+        }
+
+    });
+    //////////////////////
+    $("#user_delete").click(function() {
+        var $zk_name = $("#select_condition option:selected").text();
+        var $user = $("#user_list option:selected").text();
+        if ($user == "") {
+            alert("请先选择要删除的用户!!!!");
+        } else {
+            $.post("/delete_user/", {
+                user: $user,
+                zk_name:  $zk_name,
+            },
+            function(data) {
+                alert(data);
+        	$("#user_list option:selected").remove();
+
+            });
+		location.href = "/zk_page/";
+        }
+
+    });
     
 });
