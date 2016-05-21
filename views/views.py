@@ -356,7 +356,18 @@ class Privileges(BaseHandler):
     返回权限设置
     '''
     def get(self):
-	self.render("privileges.html")
+	query_result = ZdZookeeper.select()
+	_dict = {"all_cluster_name" : query_result }
+	self.render("privileges.html",**_dict)
 
 
 
+class Select_User_List(BaseHandler):
+    '''
+    根据ZK集群名查询返回的用户列表
+    '''
+    def post(self):
+        request_dict = self.request.arguments
+	cluster_name = (request_dict['condition'])[0]
+	Users = (ZdZookeeper.select().where(ZdZookeeper.cluster_name == cluster_name).get()).users
+	self.write(Users)

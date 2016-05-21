@@ -2,8 +2,74 @@
 {% block body %}
 
 
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-5">
+      <form class="form-inline">
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <td>
+                <div class="form-group has-success has-feedback">
+                  <label class="control-label">用户</label></div>
+              </td>
+              <td>
+                <input type="text" class="form-control" id="user"></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="form-group has-success has-feedback">
+                  <label class="control-label">ZK集群</label></div>
+              </td>
+              <td>
+                <select class="form-control" id="select_condition">
+		{% for name in all_cluster_name %}
+                  <option value="1">{{name.cluster_name}}</option>
+		{% end %}
+		</select>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="form-group has-success has-feedback">
+                  <label class="control-label">权限</label></div>
+              </td>
+              <td>
+                <div>
+                  <label class="checkbox-inline">
+                    <input type="radio" name="optionsRadiosinline" value="root">管理员</label>
+                  <label class="checkbox-inline">
+                    <input type="radio" name="optionsRadiosinline" value="web" checked>用户</label></td>
+            </tr>
+            <tr>
+              <tr>
+                <td>
+                  <div class="form-group has-success has-feedback">
+                    <label class="control-label">用户列表</label></div>
+                </td>
+                <td>
+                  <select multiple class="form-control" style="height:400px;" id="user_list">
+                    <option>{info}qwdwqdqwdwqqwdqwdqwdqwdqwqd}</option>
+		</select>
+              </tr>
+              <tr>
+                <td>
+                  <div class="form-group has-success has-feedback">
+                    <label class="control-label">操作</label></div>
+                </td>
+                <td>
+                  <div class="btn-group btn-group-lg pull-right">
+                    <button type="button" class="btn btn-success">增加</button>
+                    <button type="button" class="btn btn-warning">删除</button>
+                    <button type="button" class="btn btn-danger">修改</button></div>
+              </tr>
+          </tbody>
+        </table>
+      </form>
+      </div>
+    </div>
+  </div>
 
-dqwdqw
-wqdqwd
-qwdwqd
-{%end%}
+
+{% end %}

@@ -22,6 +22,7 @@ HANDLERS =[
 	   (r"/validate_snapshot/", 	Validate_Snapshot), 
 	   (r"/cluster_operation/", 	Cluster_Operation), 
 	   (r"/privileges/", 		Privileges), 
+	   (r"/select_user_list/", 	Select_User_List), 
 	]
 
 HANDLERS +=[(r"/check_snapshot/key_node=(.*)/",  Check_Snapshot)]

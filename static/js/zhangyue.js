@@ -564,6 +564,22 @@ $(document).ready(function() {
         };
 
     });
+    //////////////////////
+    $("#select_condition").change(function() {
+        var $condition = $("#select_condition option:selected").text();
+        $("#user_list").empty();
+        $.post("/select_user_list/", {
+            condition: $condition,
+        },
+        function(data) {
+		alert(data);
+
+            for (var i = 0; i < (data.split(",")).length; i++) {
+                $("#user_list").append("<option>" + (data.split(","))[i] + "</option>");
+            }
+
+        });
+    });
 
     
 });
