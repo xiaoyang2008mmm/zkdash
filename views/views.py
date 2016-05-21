@@ -13,8 +13,6 @@ class BaseHandler(tornado.web.RequestHandler):
 	    self.redirect(self.get_login_url())
 	
     @property
-    def db(self):
-       return self.application.db
     def get_current_user(self):
        return self.get_secure_cookie("user")
 
@@ -23,6 +21,17 @@ class BaseHandler(tornado.web.RequestHandler):
     def zk_connect(self,cluster_name):
 	zk_host = (ZdZookeeper.select().where(ZdZookeeper.cluster_name == cluster_name).get()).hosts
 	return zk_host
+    def admin(self):
+	return ["zhongyi.chen"]
+    def get_template_namespace(self):
+	namespace = {}
+	namespace = super(BaseHandler,self).get_template_namespace()
+        uimethods={
+            "admin": self.admin
+        }
+        namespace.update(uimethods)
+	return namespace
+
 
 class Base_Handler(BaseHandler):
     '''
