@@ -626,7 +626,7 @@ $(document).ready(function() {
                 alert(data);
 
             });
-		location.href = "/zk_page/";
+		location.reload(true);
         }
 
     });
@@ -646,7 +646,8 @@ $(document).ready(function() {
         	$("#user_list option:selected").remove();
 
             });
-		location.href = "/zk_page/";
+		location.reload(true);
+
         }
 
     });

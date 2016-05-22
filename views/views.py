@@ -403,7 +403,7 @@ class Add_User(BaseHandler):
 	else:
 	    data.users = (data.users).encode("utf-8") + "," + new_user
 	data.save()
-	self.write("ok")
+	self.write("用户增加成功!!!!!!")
 class Delete_User(BaseHandler):
     '''
     把用户添加到ZK集群列表中去
