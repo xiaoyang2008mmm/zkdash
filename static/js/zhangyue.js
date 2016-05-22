@@ -516,6 +516,14 @@ $(document).ready(function() {
         var index = ($history_id.index($this.closest('tr#history_id')[0])) + 1;
         var $id = $("#history_snapshot tr:eq(" + index + ") td:nth-child(1)").html();
         alert($id);
+            $.post("/snapshot_delete/", {
+               snapshot_id: $id,
+            },
+            function(data) {
+                alert(data);
+		location.reload(true);
+
+            });
     }
 
 

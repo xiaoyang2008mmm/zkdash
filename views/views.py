@@ -239,12 +239,10 @@ class M_Snapshot(BaseHandler):
 	table = ZdSnapshot(cluster_name="test",path=node_tree , data=_value ,create_time = self.GetNowTime())
 	table.save()
         zookeeper.close(zk)
-        print (_value)
 	self.write("生成快照成功!!!!!")
 class Check_Snapshot(BaseHandler):
     """查看快照"""
     def get(self,key_node):
-	print key_node
 	data = []
 	all = []
 	query = ZdSnapshot.select().where(ZdSnapshot.path == key_node)
@@ -433,5 +431,14 @@ class Begin_Qian(BaseHandler):
 	zk_source = (request_dict['zk_source'])[0]
 	zk_dest = (request_dict['zk_dest'])[0]
 	zk_key = (request_dict['zk_key'])[0]
-	print request_dict
 	self.write(bytes("wqdwq"))
+class Snapshot_Delete(BaseHandler):
+    '''
+    从数据库中删除指定的历史快照
+    '''
+    def post(self):
+        request_dict = self.request.arguments
+	snapshot_id = (request_dict['snapshot_id'])[0]
+	query = ZdSnapshot.get(ZdSnapshot.id == int(snapshot_id) ) 
+	query.delete_instance()
+	self.write("删除成功!!!!!")
