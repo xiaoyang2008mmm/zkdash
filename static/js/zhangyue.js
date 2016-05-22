@@ -508,22 +508,47 @@ $(document).ready(function() {
     });
 
     //////////////////////
-    $('#history_snapshot').on('click', 'button[id*=rollback]',get_id)
-    $('#history_snapshot').on('click', 'button[id*=snapshot_delete]',get_id)
-    function get_id() {
+    $('#history_snapshot').on('click', 'button[id*=snapshot_delete]',delete_id);
+    function delete_id() {
         var $this = $(this);
         var $history_id = $this.closest('tbody').find('tr#history_id');
         var index = ($history_id.index($this.closest('tr#history_id')[0])) + 1;
         var $id = $("#history_snapshot tr:eq(" + index + ") td:nth-child(1)").html();
-        alert($id);
             $.post("/snapshot_delete/", {
                snapshot_id: $id,
             },
             function(data) {
                 alert(data);
-		location.reload(true);
+                location.reload(true);
+
+            })
+    }
+
+
+    //////////////////////
+    $('#history_snapshot').on('click', 'button[id*=rollback]',rollback_id)
+    function rollback_id() {
+        var $this = $(this);
+        var $history_id = $this.closest('tbody').find('tr#history_id');
+        var index = ($history_id.index($this.closest('tr#history_id')[0])) + 1;
+        var $id = $("#history_snapshot tr:eq(" + index + ") td:nth-child(1)").html();
+        
+	var msg = "确定要回滚吗?";
+        if (confirm(msg) == true) {
+            $.post("/snapshot_rollback/", {
+               snapshot_id: $id,
+            },
+            function(data) {
+                alert(data);
+                location.reload(true);
 
             });
+        } else {
+            return false;
+        }
+
+
+
     }
 
 

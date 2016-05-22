@@ -27,6 +27,7 @@ HANDLERS =[
 	   (r"/delete_user/", 		Delete_User), 
 	   (r"/begin_qian/", 		Begin_Qian), 
 	   (r"/snapshot_delete/", 	Snapshot_Delete), 
+	   (r"/snapshot_rollback/", 	Snapshot_Rollback), 
 	]
 
 HANDLERS +=[(r"/check_snapshot/key_node=(.*)/",  Check_Snapshot)]

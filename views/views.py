@@ -236,7 +236,7 @@ class M_Snapshot(BaseHandler):
         zk=zookeeper.init(self.zk_connect(cluster_name))
         _value = (zookeeper.get(zk,node_tree))[0]
 	create_time = time.time()
-	table = ZdSnapshot(cluster_name="test",path=node_tree , data=_value ,create_time = self.GetNowTime())
+	table = ZdSnapshot(cluster_name= cluster_name ,path=node_tree , data=_value ,create_time = self.GetNowTime())
 	table.save()
         zookeeper.close(zk)
 	self.write("生成快照成功!!!!!")
@@ -442,3 +442,16 @@ class Snapshot_Delete(BaseHandler):
 	query = ZdSnapshot.get(ZdSnapshot.id == int(snapshot_id) ) 
 	query.delete_instance()
 	self.write("删除成功!!!!!")
+class Snapshot_Rollback(BaseHandler):
+    '''
+    从数据库中还原指定的历史快照
+    '''
+    def post(self):
+        request_dict = self.request.arguments
+	snapshot_id = (request_dict['snapshot_id'])[0]
+	print snapshot_id
+	data =  ZdSnapshot.get(ZdSnapshot.id == int(snapshot_id) ) 
+	zk = zookeeper.init(self.zk_connect(data.cluster_name))
+        zookeeper.set(zk, data.path ,data.data)
+        zookeeper.close(zk)
+	self.write("还原成功!!!!!")
