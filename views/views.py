@@ -433,6 +433,5 @@ class Begin_Qian(BaseHandler):
 	zk_source = (request_dict['zk_source'])[0]
 	zk_dest = (request_dict['zk_dest'])[0]
 	zk_key = (request_dict['zk_key'])[0]
-	for i in range(1,10):
-	    self.write(bytes(i) )
+	print request_dict
 	self.write(bytes("wqdwq"))

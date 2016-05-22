@@ -620,20 +620,27 @@ $(document).ready(function() {
     //////////////////////
     
     $("#qianyi_btn").click(function() {
-        $.ajax({
-            async: false,
-            url: "/begin_qian/",
-            type: "post",
-            data: {
-    
-                zk_source: "1.1.1.1",
-                zk_dest: "1.1.1.1",
-                zk_key: "key",
+	var zk_source = $("#zk_source").val();
+	var zk_dest = $("#zk_dest").val();
+	var zk_key = $("#zk_qianyikey").val();
+	var fdStart = zk_key.indexOf("/");
+	if (zk_source.indexOf(":") == -1 || zk_dest.indexOf(":") == -1 ){
+	    alert("填写格式:\nip:port")
+	}else if (zk_key==""){
+	    alert("请填写key");
+	}else if (fdStart == -1){
+	    alert("必须以/开头");
+	
+	}else{
+            $.post("/begin_qian/", {
+                zk_source: zk_source,
+                zk_dest: zk_dest,
+                zk_key: zk_key,
             },
-            success: function(data) {
-                console.log(data);
-            }
-        })
-    
+            function(data) {
+                alert(data);
+
+            });
+    	}
     });
 });
