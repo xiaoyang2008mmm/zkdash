@@ -617,5 +617,23 @@ $(document).ready(function() {
         }
 
     });
+    //////////////////////
     
+    $("#qianyi_btn").click(function() {
+        $.ajax({
+            async: false,
+            url: "/begin_qian/",
+            type: "post",
+            data: {
+    
+                zk_source: "1.1.1.1",
+                zk_dest: "1.1.1.1",
+                zk_key: "key",
+            },
+            success: function(data) {
+                console.log(data);
+            }
+        })
+    
+    });
 });

@@ -24,7 +24,7 @@ class BaseHandler(tornado.web.RequestHandler):
 	zk_host = (ZdZookeeper.select().where(ZdZookeeper.cluster_name == cluster_name).get()).hosts
 	return zk_host
     def admin(self,user):
-	admin_list = ["zhongyi.chen1"]
+	admin_list = ["zhongyi.chen"]
 	if user in admin_list:
 	    return True
 	else:
@@ -424,3 +424,15 @@ class Delete_User(BaseHandler):
 	    
 	data.save()
 	self.write("删除成功!!!!")
+class Begin_Qian(BaseHandler):
+    '''
+    ZK数据迁移
+    '''
+    def post(self):
+        request_dict = self.request.arguments
+	zk_source = (request_dict['zk_source'])[0]
+	zk_dest = (request_dict['zk_dest'])[0]
+	zk_key = (request_dict['zk_key'])[0]
+	for i in range(1,10):
+	    self.write(bytes(i) )
+	self.write(bytes("wqdwq"))

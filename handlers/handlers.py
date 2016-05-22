@@ -25,6 +25,7 @@ HANDLERS =[
 	   (r"/select_user_list/", 	Select_User_List), 
 	   (r"/add_user/", 		Add_User), 
 	   (r"/delete_user/", 		Delete_User), 
+	   (r"/begin_qian/", 		Begin_Qian), 
 	]
 
 HANDLERS +=[(r"/check_snapshot/key_node=(.*)/",  Check_Snapshot)]
