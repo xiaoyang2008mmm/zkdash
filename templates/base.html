@@ -13,7 +13,7 @@
 
 <nav class="navbar navbar-inverse" role="navigation">
    <div class="navbar-header">
-      <a class="navbar-brand" href="/zk_page/">zookeeper管理平台</a>
+      <a class="navbar-brand" href="/">zookeeper管理平台</a>
    </div>
    <div>
       <ul class="nav navbar-nav">
@@ -22,11 +22,15 @@
                配置管理 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
+		{% if admin(current_user) %}
                <li><a href="/zk_page/">zookeeper管理</a></li>
+		{% end %}
                <li class="divider"></li>
                <li><a href="/config_mangager/">节点管理</a></li>
+		{% if admin(current_user) %}
                <li class="divider"></li>
                <li><a href="/snapshot_page/">zk数据迁移</a></li>
+		{% end %}
             </ul>
          </li>
 
@@ -40,15 +44,16 @@
             <ul class="dropdown-menu">
                <li class="divider"></li>
                <li><a href="/logout/">退出</a></li>
+		{% if admin(current_user) %}
                <li class="divider"></li>
                <li><a href="/privileges/">权限设置</a></li>
+		{% end %}
             </ul>
          </li>
       </ul>
    </div>
 </nav>
 
-{{admin}}
 {% block body %}{% end %}
 
 </body>

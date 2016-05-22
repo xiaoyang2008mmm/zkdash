@@ -23,8 +23,12 @@ class BaseHandler(tornado.web.RequestHandler):
     def zk_connect(self,cluster_name):
 	zk_host = (ZdZookeeper.select().where(ZdZookeeper.cluster_name == cluster_name).get()).hosts
 	return zk_host
-    def admin(self):
-	return ["zhongyi.chen"]
+    def admin(self,user):
+	admin_list = ["zhongyi.chen1"]
+	if user in admin_list:
+	    return True
+	else:
+	    return False
     def get_template_namespace(self):
 	namespace = {}
 	namespace = super(BaseHandler,self).get_template_namespace()
