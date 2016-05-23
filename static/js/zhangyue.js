@@ -46,6 +46,7 @@ $(document).ready(function() {
                 cluster_name: $name,
             },
             function(data) {
+		//过滤脏数据
 		if (data.length < 10 ){
 		    alert(data);
 		}else{
@@ -192,7 +193,8 @@ $(document).ready(function() {
         function(data) {
             alert(data);
             $('#myModal').modal('hide');
-            load_node_tree();
+                location.reload(true);
+            //load_node_tree();
         });
 
     });
