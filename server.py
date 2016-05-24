@@ -6,7 +6,7 @@ from handlers.handlers import HANDLERS , STATIC_PATH , TEMPLATE_PATH
 
 from tornado.options import define, options, parse_command_line
 
-define("port", default=88, help="run on the given port", type=int)
+define("port", default=89, help="run on the given port", type=int)
 
 
 class Application(tornado.web.Application):

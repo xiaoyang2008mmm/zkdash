@@ -4,7 +4,6 @@ import  zookeeper,time
 from lib.email_auth import Mail
 from lib.parserconf import *
 import urlparse 
-from urllib import urlencode
 import string 
 from  modle.syncdb import *
 class BaseHandler(tornado.web.RequestHandler):
