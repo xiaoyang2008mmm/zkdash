@@ -129,7 +129,7 @@ $(document).ready(function() {
                         var data = "此节点下没有值"
                     }
                     $('#display_value').text(data);
-                    $('#check_myModal').modal('show');
+                    $('#check_info_myModal').modal('show');
 
                 });
             };
@@ -172,7 +172,8 @@ $(document).ready(function() {
             },
             function(data) {
                 $('#node_name').attr("value", get_node_tree());
-                $('#node_value').attr("value", data);
+                //$('#node_value').attr("value", data);
+                $('#textarea_node_value').html(data);
                 $('#myModal').modal('show');
 
             });
@@ -182,7 +183,7 @@ $(document).ready(function() {
     ////////////////////////////////////////////
     $("#commit_btn").click(function() {
         var node_name = $('#node_name').attr("value");
-        var node_value = $('#node_value').val();
+        var node_value = $('#textarea_node_value').html();
         var $name = $("#select_list option:selected").text();
 
         $.post("/mod_node_value/", {
