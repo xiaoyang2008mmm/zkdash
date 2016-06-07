@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*- 
 import tornado.httpserver, os 
 import tornado.ioloop 
-import tornado.web , pyshell
+import tornado.web 
+import subprocess
 from handlers.handlers import HANDLERS , STATIC_PATH , TEMPLATE_PATH
 
 from tornado.options import define, options, parse_command_line
 
-define("port", default=89, help="run on the given port", type=int)
+define("port", default=88, help="run on the given port", type=int)
 
 
 class Application(tornado.web.Application):
@@ -27,7 +28,8 @@ class Application(tornado.web.Application):
 def make_clean():
     '''清理pyc文件
     '''
-    pyshell.command("find . -name '*.pyc' | xargs rm -rf" )
+    subprocess.Popen("find . -name '*.pyc' | xargs rm -rf", shell=True)
+
 
 
 def main():
