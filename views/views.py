@@ -128,7 +128,6 @@ class Mod_Node_Value(BaseHandler):
 	node_value = (request_dict['node_value'])[0]
 	node_name = (request_dict['node_name'])[0]
         cluster_name  = (request_dict['cluster_name'])[0]
-	print "======%s"%node_value , node_name , cluster_name 
         zk=zookeeper.init(self.zk_connect(cluster_name))
 	zookeeper.set(zk,node_name,node_value)
 	zookeeper.close(zk)

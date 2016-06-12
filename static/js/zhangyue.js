@@ -185,7 +185,6 @@ $(document).ready(function() {
         var node_name = $('#node_name').attr("value");
         var node_value = $('#textarea_node_value').val();
         var $name = $("#select_list option:selected").text();
-	alert(node_value);
 
         $.post("/mod_node_value/", {
             node_name: node_name,
@@ -683,5 +682,10 @@ $(document).ready(function() {
 
             });
     	}
+    });
+    //////////////////////
+    
+    $("#status_zk").click(function() {
+	alert("想查看什么,tell me!!!!");
     });
 });
