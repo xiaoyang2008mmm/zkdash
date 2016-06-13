@@ -6,6 +6,16 @@ from lib.parserconf import *
 import urlparse 
 import string 
 from  modle.syncdb import *
+
+
+import logging
+
+logging.basicConfig(level=logging.DEBUG,
+                format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
+                datefmt='%a, %d %b %Y %H:%M:%S',
+                filename='/tmp/zkdash.log',
+                filemode='w')
+
 class BaseHandler(tornado.web.RequestHandler):
     def prepare(self):
 	if not self.request.uri.startswith(self.get_login_url()) and self.current_user is  None:
@@ -122,6 +132,7 @@ class Get_Node_Value(BaseHandler):
 	_value = (zookeeper.get(zk,node_id))[0]
 	zookeeper.close(zk)
 	self.write(_value)
+	logging.info('%s查看了%s的node%s'%(self.get_current_user(),cluster_name,node_id))
 class Mod_Node_Value(BaseHandler):
     def post(self):
 	request_dict = self.request.arguments
