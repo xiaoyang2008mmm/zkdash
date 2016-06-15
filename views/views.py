@@ -132,7 +132,7 @@ class Get_Node_Value(BaseHandler):
 	_value = (zookeeper.get(zk,node_id))[0]
 	zookeeper.close(zk)
 	self.write(_value)
-	logging.info('%s查看了%s的node%s'%(self.get_current_user(),cluster_name,node_id))
+	logging.info('%s查看了集群%s的节点:%s'%(self.get_current_user(),cluster_name,node_id))
 class Mod_Node_Value(BaseHandler):
     def post(self):
 	request_dict = self.request.arguments
@@ -142,6 +142,7 @@ class Mod_Node_Value(BaseHandler):
         zk=zookeeper.init(self.zk_connect(cluster_name))
 	zookeeper.set(zk,node_name,node_value)
 	zookeeper.close(zk)
+	logging.info('%s修改了集群%s的节点:%s值为%s'%(self.get_current_user(),cluster_name,node_name ,node_value ))
 	self.write("修改成功")
 class Post_Delete(BaseHandler):
     def post(self):
